@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.lewis</groupId>
-	<artifactId>courseSelection-withoutFramwork</artifactId>
+	<artifactId>educationalAdministration</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>courseSelection-withoutFramwork Maven Webapp</name>
+	<name>educationalAdministration Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -71,7 +71,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>courseSelection-withoutFramwork</finalName>
+		<finalName>educationalAdministration</finalName>
 		<plugins>
 			<!-- 配置编译插件使用的jdk版本和字符集编码 -->
 			<plugin>
