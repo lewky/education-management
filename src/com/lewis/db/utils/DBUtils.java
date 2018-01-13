@@ -1,12 +1,17 @@
-// Copyright (c) 2018-2018 "Lewis" Limited. All rights reserved.
+// Copyright (c) 2018-2018 Lewis.Liu Limited. All rights reserved.
 // ============================================================================
 // CURRENT VERSION EA.1.0.0
 // ============================================================================
 // CHANGE LOG
-// EA.1.0.0 : 2018-1-12, "Lewis" created
+// EA.1.0.0 : 2018-1-12, Lewis.Liu created
 // ============================================================================
 package com.lewis.db.utils;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -15,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * utils for db
  *
- * @author "Lewis"
+ * @author Lewis.Liu
  */
 public class DBUtils {
 
@@ -64,11 +69,56 @@ public class DBUtils {
         }
     }
 
-    // private constructor
+    // privatize constructor
     private DBUtils() {
     }
 
-    public static void main(final String[] args) {
+    /**
+     * get jdbc connection to connect db
+     *
+     * @return jdbc Connection
+     */
+    public static Connection getConnection() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(URL, JDBC_USER, PASSWORD);
+        } catch (final SQLException e) {
+            LOGGER.error("Fail to get jdbc Connection.", e);
+        }
+        return conn;
+    }
 
+    /**
+     * close ResultSet, Statement & Connection for jdbc
+     *
+     * @param rs
+     *            jdbc ResultSet
+     * @param st
+     *            jdbc Statement
+     * @param conn
+     *            jdbc Connection
+     */
+    public static void release(final ResultSet rs, final Statement st, final Connection conn) {
+        try {
+            if (rs != null && !rs.isClosed()) {
+                rs.close();
+            }
+        } catch (final SQLException e) {
+            LOGGER.error("Fail to close jdbc ResultSet.", e);
+        }
+        try {
+            if (st != null && !st.isClosed()) {
+                st.close();
+            }
+        } catch (final SQLException e) {
+            LOGGER.error("Fail to close jdbc Statement.", e);
+        }
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+            }
+        } catch (final SQLException e) {
+            LOGGER.error("Fail to close jdbc Connection.", e);
+        }
     }
 }
