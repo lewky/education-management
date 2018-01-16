@@ -12,7 +12,7 @@ CREATE TABLE `ea_authority`(
   `id` bigint unsigned NOT NULL auto_increment COMMENT '权限ID',
   `name` varchar(30) NOT NULL COMMENT '权限名称',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` datetime DEFAULT NULL COMMENT '更新时间',
+  `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   primary key (`id`)
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='权限表';
@@ -25,7 +25,7 @@ CREATE TABLE `ea_role`(
   `name` varchar(30) NOT NULL COMMENT '角色名称',
   `is_valid` tinyint DEFAULT '0' COMMENT '角色是否有效, 0:无效 1:有效',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` datetime DEFAULT NULL COMMENT '更新时间',
+  `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   primary key (`id`)
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='角色表';
@@ -39,11 +39,9 @@ CREATE TABLE `ea_role_authority`(
   `authority_id` varchar(30) NOT NULL COMMENT '权限ID',
   `is_valid` tinyint DEFAULT '0' COMMENT '状态标识, 0:无权限 1:有权限',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` datetime DEFAULT NULL COMMENT '更新时间',
+  `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   primary key (`id`),
-  key `idx_role_id` (`role_id`),
-  key `idx_authority_id` (`authority_id`),
   CONSTRAINT `fk_roleAuthority_role` FOREIGN KEY (`role_id`) REFERENCES `ea_role` (`id`),
   CONSTRAINT `fk_roleAuthority_authority` FOREIGN KEY (`authority_id`) REFERENCES `ea_authority` (`id`)
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='角色权限表';
@@ -67,15 +65,15 @@ CREATE TABLE `ea_user` (
   `birthday` date DEFAULT NULL COMMENT '出生日期',
   `email` varchar(30) DEFAULT NULL COMMENT '邮箱地址',
   `telephone` varchar(15) DEFAULT NULL COMMENT '联系方式',
-  `in_date` date DEFAULT NULL COMMENT '入学时间/入职时间',
+  `in_date` date NOT NULL COMMENT '入学时间/入职时间',
+  `in_grade_name` varchar(30) DEFAULT NULL COMMENT '入学年级：大一/大二/研一等，用户为学生时不应为null',
   `out_date` date DEFAULT NULL COMMENT '毕业时间/离职时间',
-  `last_login` datetime DEFAULT NULL COMMENT '上次登录时间',
+  `last_login` TIMESTAMP DEFAULT NULL COMMENT '上次登录时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` datetime DEFAULT NULL COMMENT '更新时间',
+  `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   PRIMARY KEY (`id`),
   key `idx_login_id` (`login_id`),
-  key `idx_role_id` (`role_id`),
   key `is_valid` (`is_valid`),
   CONSTRAINT `fk_user_role` FOREIGN KEY (`role_id`) REFERENCES `ea_role` (`id`)
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='用户表';
@@ -89,7 +87,7 @@ CREATE TABLE `ea_school`(
   `president` varchar(30) DEFAULT NULL COMMENT '校长',
   `description` text DEFAULT NULL COMMENT '学校描述',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` datetime DEFAULT NULL COMMENT '更新时间',
+  `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   primary key(`id`)
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='学校表';
@@ -105,10 +103,9 @@ CREATE TABLE `ea_dept`(
   `description` text DEFAULT NULL COMMENT '院系描述',
   `telephone` varchar(15) DEFAULT NULL COMMENT '联系方式',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` datetime DEFAULT NULL COMMENT '更新时间',
+  `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   primary key(`id`),
-  key `idx_schoolId` (`school_id`),
   CONSTRAINT `fk_dept_school` FOREIGN KEY (`school_id`) REFERENCES `ea_school` (`id`)
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='院系表';
 
@@ -123,11 +120,26 @@ CREATE TABLE `ea_major` (
   `telephone` varchar(15) DEFAULT NULL COMMENT '联系方式',
   `description` text DEFAULT NULL COMMENT '专业介绍',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_on` datetime DEFAULT NULL COMMENT '更新时间',
+  `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   PRIMARY KEY  (`id`),
-  KEY `idx_major_dept` (`dept_id`),
   CONSTRAINT `idx_major_dept` FOREIGN KEY (`dept_id`) REFERENCES `ea_dept` (`id`)
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='专业表';
 
--- 
+-- 班级表
+DROP TABLE IF EXISTS `ea_class`;
+
+CREATE TABLE `ea_class` (
+  `id` bigint unsigned NOT NULL auto_increment '班级ID',
+  `num` int unsigned NOT NULL COMMENT '班级编号',
+  `grade` int unsigned NOT NULL COMMENT '年级',
+  `major_id` bigint unsigned NOT NULL auto_increment '专业ID',
+  `class_adviser` varchar(30) NULL 
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
+  `updated_by` varchar(30) NULL COMMENT '被谁更新',
+  PRIMARY KEY  (`id`),
+  CONSTRAINT `idx_class_major` FOREIGN KEY (`major_id`) REFERENCES `ea_major` (`id`)
+) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='班级表';
+
+-- 班级学生表
