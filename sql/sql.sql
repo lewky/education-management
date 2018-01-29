@@ -113,7 +113,7 @@ CREATE TABLE `ea_dept`(
 DROP TABLE IF EXISTS `ea_major`;
 
 CREATE TABLE `ea_major` (
-  `id` bigint unsigned NOT NULL auto_increment '专业ID',
+  `id` bigint unsigned NOT NULL auto_increment COMMENT '专业ID',
   `name` varchar(30) NOT NULL COMMENT '专业名称',
   `dept_id` bigint unsigned NOT NULL COMMENT '院系ID',
   `assistant` varchar(30) DEFAULT NULL COMMENT '辅导员',
@@ -130,11 +130,11 @@ CREATE TABLE `ea_major` (
 DROP TABLE IF EXISTS `ea_class`;
 
 CREATE TABLE `ea_class` (
-  `id` bigint unsigned NOT NULL auto_increment '班级ID',
+  `id` bigint unsigned NOT NULL auto_increment COMMENT'班级ID',
   `num` int unsigned NOT NULL COMMENT '班级编号',
   `grade` int unsigned NOT NULL COMMENT '年级:20XX',
   `major_id` bigint unsigned NOT NULL COMMENT '专业ID',
-  `class_adviser` varchar(30) NOT NULL COMMENT '班主任ID',
+  `class_adviser` bigint unsigned NOT NULL COMMENT '班主任ID',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
@@ -147,7 +147,7 @@ CREATE TABLE `ea_class` (
 DROP TABLE IF EXISTS `ea_class_student`;
 
 CREATE TABLE `ea_class_student` (
-  `id` bigint unsigned NOT NULL auto_increment '班级学生表ID',
+  `id` bigint unsigned NOT NULL auto_increment COMMEMT 'ID',
   `class_id` bigint unsigned NOT NULL COMMENT '班级ID',
   `student_id` bigint unsigned NOT NULL COMMENT '学生ID',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -159,7 +159,10 @@ CREATE TABLE `ea_class_student` (
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='班级学生表';
 
 -- 课程表
+DROP TABLE IF EXISTS `ea_course`;
 
 -- 学生选课表
+DROP TABLE IF EXISTS `ea_student_course`;
 
 -- 成绩表
+DROP TABLE IF EXISTS `ea_score`;
