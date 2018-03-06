@@ -5,7 +5,7 @@
 // CHANGE LOG
 // EA.1.0.0 : 2018-1-12, Lewis.Liu created
 // ============================================================================
-package com.lewis.db.utils;
+package com.ea.db.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -65,7 +65,7 @@ public class DBUtils {
         try {
             Class.forName(DRIVER_CLASS);
         } catch (final ClassNotFoundException e) {
-            LOGGER.error("Fail to load jdbc driver class.", e);
+            LOGGER.error("Failed to load jdbc driver class.", e);
         }
     }
 
@@ -83,7 +83,7 @@ public class DBUtils {
         try {
             conn = DriverManager.getConnection(URL, JDBC_USER, PASSWORD);
         } catch (final SQLException e) {
-            LOGGER.error("Fail to get jdbc Connection.", e);
+            LOGGER.error("Failed to get jdbc Connection.", e);
         }
         return conn;
     }
@@ -104,21 +104,21 @@ public class DBUtils {
                 rs.close();
             }
         } catch (final SQLException e) {
-            LOGGER.error("Fail to close jdbc ResultSet.", e);
+            LOGGER.error("Failed to close jdbc ResultSet.", e);
         }
         try {
             if (st != null && !st.isClosed()) {
                 st.close();
             }
         } catch (final SQLException e) {
-            LOGGER.error("Fail to close jdbc Statement.", e);
+            LOGGER.error("Failed to close jdbc Statement.", e);
         }
         try {
             if (conn != null && !conn.isClosed()) {
                 conn.close();
             }
         } catch (final SQLException e) {
-            LOGGER.error("Fail to close jdbc Connection.", e);
+            LOGGER.error("Failed to close jdbc Connection.", e);
         }
     }
 }
