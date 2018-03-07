@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS `ea_authority`;
 CREATE TABLE `ea_authority`(
   `id` bigint unsigned NOT NULL COMMENT '主键ID',
   `name` varchar(30) NOT NULL COMMENT '权限名称',
+  `code` varchar(100) NOT NULL COMMENT '权限编码',
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
