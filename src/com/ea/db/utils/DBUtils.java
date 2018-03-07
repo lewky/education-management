@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lewis.Liu
  */
-public class DBUtils {
+public final class DBUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DBUtils.class);
 
