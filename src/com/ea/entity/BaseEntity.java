@@ -22,7 +22,7 @@ public class BaseEntity implements Serializable {
     /**
      * Id for every entity
      */
-    private String id;
+    private Long id;
 
     /**
      * When is the entity created on
@@ -42,7 +42,7 @@ public class BaseEntity implements Serializable {
     /**
      * @return the id
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
