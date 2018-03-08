@@ -74,7 +74,7 @@ public final class DBUtils {
     }
 
     /**
-     * get jdbc connection to connect db
+     * Get jdbc connection to connect db.
      *
      * @return jdbc Connection
      */
@@ -89,7 +89,7 @@ public final class DBUtils {
     }
 
     /**
-     * close ResultSet, Statement & Connection for jdbc
+     * Close ResultSet, Statement & Connection for jdbc.
      *
      * @param rs
      *            jdbc ResultSet
