@@ -19,4 +19,7 @@ public class BaseEntityConsts {
     public static final String FIELD_CREATED_ON = "createdOn";
     public static final String FIELD_UPDATED_ON = "updatedOn";
     public static final String FIELD_UPDATED_BY = "updatedBy";
+
+    private BaseEntityConsts() {
+    }
 }

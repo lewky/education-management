@@ -17,4 +17,7 @@ public class RoleConsts {
      */
     public static final String FIELD_NAME = "name";
     public static final String FIELD_VALID = "valid";
+
+    private RoleConsts() {
+    }
 }

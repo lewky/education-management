@@ -20,7 +20,7 @@ public class Role extends BaseEntity {
     private String name;
 
     /**
-     * indicate whether the role is valid
+     * 角色是否有效
      */
     private Boolean valid;
 

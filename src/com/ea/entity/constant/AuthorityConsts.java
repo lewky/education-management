@@ -17,4 +17,7 @@ public class AuthorityConsts {
      */
     public static final String FIELD_NAME = "name";
     public static final String FIELD_CODE = "code";
+
+    private AuthorityConsts() {
+    }
 }
