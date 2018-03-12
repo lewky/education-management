@@ -12,9 +12,6 @@ package com.ea.entity.constant;
  */
 public class AuthorityConsts {
 
-    /*
-     * field name in Authority class
-     */
     public static final String FIELD_NAME = "name";
     public static final String FIELD_CODE = "code";
 

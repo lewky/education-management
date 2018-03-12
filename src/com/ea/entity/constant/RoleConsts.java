@@ -12,9 +12,6 @@ package com.ea.entity.constant;
  */
 public class RoleConsts {
 
-    /*
-     * field name in Role class
-     */
     public static final String FIELD_NAME = "name";
     public static final String FIELD_VALID = "valid";
 

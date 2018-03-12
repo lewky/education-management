@@ -12,9 +12,6 @@ package com.ea.entity.constant;
  */
 public class BaseEntityConsts {
 
-    /*
-     * field name in BaseEntity class
-     */
     public static final String FIELD_ID = "id";
     public static final String FIELD_CREATED_ON = "createdOn";
     public static final String FIELD_UPDATED_ON = "updatedOn";

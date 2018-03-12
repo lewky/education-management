@@ -12,9 +12,6 @@ package com.ea.entity.constant;
  */
 public class UserConsts {
 
-    /*
-     * field name in Role class
-     */
     public static final String FIELD_LOGIN_ID = "loginId";
     public static final String FIELD_PASSWORD = "password";
     public static final String FIELD_PASSWORD_SALT = "passwordSalt";
