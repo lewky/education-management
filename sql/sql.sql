@@ -86,13 +86,15 @@ CREATE TABLE `ea_school`(
   `school_no` bigint NOT NULL auto_increment COMMENT'学校编号',
   `name` varchar(30) NOT NULL COMMENT '学校名称',
   `president` varchar(30) DEFAULT NULL COMMENT '校长',
+  `president_id` bigint unsigned DEFAULT NULL COMMENT '校长ID',
   `description` text DEFAULT NULL COMMENT '学校描述',
   `place` varchar(120) DEFAULT NULL COMMENT '学校地址',
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   primary key(`id`),
-  key `idx_school_no` (`school_no`)
+  key `idx_school_no` (`school_no`),
+  CONSTRAINT `fk_school_user` FOREIGN KEY (`president_id`) REFERENCES `ea_user` (`login_id`)
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='学校表';
 
 -- 院系表
@@ -102,8 +104,10 @@ CREATE TABLE `ea_dept`(
   `id` bigint unsigned NOT NULL COMMENT '主键ID',
   `dept_no` bigint NOT NULL auto_increment COMMENT'院系编号',
   `name` varchar(30) NOT NULL COMMENT '院系名称',
+  `school_name` varchar(30) NOT NULL COMMENT '学校名称',
   `school_id` bigint unsigned NOT NULL COMMENT '学校ID',
   `dean` varchar(30) DEFAULT NULL COMMENT '院长/系主任',
+  `dean_id` bigint unsigned DEFAULT NULL COMMENT '院长/系主任ID',
   `description` text DEFAULT NULL COMMENT '院系描述',
   `place` varchar(120) DEFAULT NULL COMMENT '院系办公室地址',
   `telephone` varchar(15) DEFAULT NULL COMMENT '联系方式',
@@ -112,7 +116,8 @@ CREATE TABLE `ea_dept`(
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   primary key(`id`),
   key `idx_dept_no` (`dept_no`),
-  CONSTRAINT `fk_dept_school` FOREIGN KEY (`school_id`) REFERENCES `ea_school` (`id`)
+  CONSTRAINT `fk_dept_school` FOREIGN KEY (`school_id`) REFERENCES `ea_school` (`id`),
+  CONSTRAINT `fk_dept_user` FOREIGN KEY (`dean_id`) REFERENCES `ea_user` (`login_id`)
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='院系表';
 
 -- 专业表
@@ -122,8 +127,10 @@ CREATE TABLE `ea_major` (
   `id` bigint unsigned NOT NULL COMMENT '主键ID',
   `major_no` bigint NOT NULL auto_increment COMMENT'专业编号',
   `name` varchar(30) NOT NULL COMMENT '专业名称',
+  `dept_name` varchar(30) NOT NULL COMMENT '院系名称',
   `dept_id` bigint unsigned NOT NULL COMMENT '院系ID',
   `assistant` varchar(30) DEFAULT NULL COMMENT '辅导员',
+  `assistant_id` bigint unsigned DEFAULT NULL COMMENT '辅导员ID',
   `telephone` varchar(15) DEFAULT NULL COMMENT '联系方式',
   `description` text DEFAULT NULL COMMENT '专业介绍',
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -131,7 +138,8 @@ CREATE TABLE `ea_major` (
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   PRIMARY KEY  (`id`),
   key `idx_major_no` (`major_no`),
-  CONSTRAINT `idx_major_dept` FOREIGN KEY (`dept_id`) REFERENCES `ea_dept` (`id`)
+  CONSTRAINT `idx_major_dept` FOREIGN KEY (`dept_id`) REFERENCES `ea_dept` (`id`),
+  CONSTRAINT `fk_major_user` FOREIGN KEY (`assistant_id`) REFERENCES `ea_user` (`login_id`)
 ) ENGINE=InnoDB auto_increment=1000 DEFAULT CHARSET=utf8 COMMENT='专业表';
 
 -- 班级表
@@ -139,18 +147,20 @@ DROP TABLE IF EXISTS `ea_class`;
 
 CREATE TABLE `ea_class` (
   `id` bigint unsigned NOT NULL COMMENT '主键ID',
-  `num` int NOT NULL COMMENT'班号',
-  `class_no` bigint unsigned NOT NULL UNIQUE COMMENT'班级编号--(由代码逻辑生成:专业编号+年级编号+班号)',
+  `num` int unsigned NOT NULL COMMENT '班号',
+  `class_no` bigint unsigned NOT NULL UNIQUE COMMENT '班级编号--(由代码逻辑生成:专业编号+年级编号+班号)',
   `grade` int unsigned NOT NULL COMMENT '年级:YYYY',
+  `major_name` varchar(30) NOT NULL COMMENT '专业名称',
   `major_id` bigint unsigned NOT NULL COMMENT '专业ID',
-  `class_adviser` bigint unsigned NOT NULL COMMENT '班主任ID',
+  `class_adviser` varchar(30) NOT NULL COMMENT '班主任',
+  `adviser_id` bigint unsigned NOT NULL COMMENT '班主任ID',
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   PRIMARY KEY  (`id`),
   key `idx_class_no` (`class_no`),
   CONSTRAINT `idx_class_major` FOREIGN KEY (`major_id`) REFERENCES `ea_major` (`id`),
-  CONSTRAINT `idx_class_user` FOREIGN KEY (`class_adviser`) REFERENCES `ea_user` (`login_id`)
+  CONSTRAINT `idx_class_user` FOREIGN KEY (`adviser_id`) REFERENCES `ea_user` (`login_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='班级表';
 
 -- 班级学生表
@@ -174,18 +184,22 @@ DROP TABLE IF EXISTS `ea_course`;
 CREATE TABLE `ea_course` (
   `id` bigint unsigned NOT NULL COMMEMT '主键ID',
   `name` varchar(30) NOT NULL COMMENT '课程名称',
+  `teacher_name` varchar(30) NOT NULL COMMENT '教师名称',
   `teacher_id` bigint unsigned NOT NULL COMMENT '教师ID',
   `school_year` smallint unsigned NOT NULL COMMENT '学年:YYYY',
   `semester` tinyint NOT NULL COMMENT '学期:1,2,3',
   `period` smallint unsigned NOT NULL COMMENT '学时',
   `credit` float unsigned NOT NULL COMMENT '学分',
-  `class_id` bigint unsigned NOT NULL COMMENT '班级ID',
+  `major_name` varchar(30) NOT NULL COMMENT '专业名称',
+  `major_id` bigint unsigned NOT NULL COMMENT '专业ID',
   `time` varchar(150) DEFAULT NULL COMMENT '上课时间:{第XX周周XX第XX节,第XX周周XX第XX节,...}',
   `place` varchar(30) DEFAULT NULL COMMENT '上课地点',
   `description` text DEFAULT NULL COMMENT '课程介绍',
-  `course_type` varchar(30) NOT NULL COMMENT '课程类型代码,该字段名对应一条Codelist Book(COURSE_TYPE)',
-  `course_type_name` varchar(30) NOT NULL COMMENT '课程类型名字',
-  `is_elective` tinyint DEFAULT '0' COMMENT '是否是选修课, 0:必修课 1:选修课',
+  `codelist_book_code` varchar(30) NOT NULL COMMENT 'codelist代码',
+  `codelist_book_name` varchar(30) NOT NULL COMMENT 'codelist名字(COURSE_TYPE)',
+  `course_type_code` varchar(30) NOT NULL COMMENT '课程类型代码',
+  `course_type_name` varchar(30) NOT NULL COMMENT '课程类型名字:社会科学...',
+  `is_minor` tinyint DEFAULT '0' COMMENT '是否是选修课, 0:必修课 1:选修课',
   `is_validated` tinyint DEFAULT '0' COMMENT '是否已经验证, 0:未验证 1:已验证',
   `is_arranged` tinyint DEFAULT '0' COMMENT '是否已经排课, 0:未排课 1:已排课',
   `selected_num` smallint unsigned DEFAULT '0' COMMENT '选课人数',
@@ -193,7 +207,7 @@ CREATE TABLE `ea_course` (
   `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   PRIMARY KEY  (`id`),
-  CONSTRAINT `idx_course_class` FOREIGN KEY (`class_id`) REFERENCES `ea_class` (`id`),
+  CONSTRAINT `idx_course_major` FOREIGN KEY (`major_id`) REFERENCES `ea_major` (`id`),
   CONSTRAINT `idx_course_user` FOREIGN KEY (`teacher_id`) REFERENCES `ea_user` (`login_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程表';
 
@@ -234,14 +248,14 @@ DROP TABLE IF EXISTS `ea_codelist_book`;
 
 CREATE TABLE `ea_codelist_book` (
   `id` bigint unsigned NOT NULL COMMEMT '主键ID',
-  `code` smallint unsigned COMMENT 'codelist book code: 1,2,3,...',
+  `code` int unsigned NOT NULL auto_increment COMMENT 'codelist book code: 1,2,3,...',
   `name` varchar(30) NOT NULL COMMENT 'codelist book name',
   `description` text DEFAULT NULL COMMENT '介绍',
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_on` TIMESTAMP DEFAULT NULL COMMENT '更新时间',
   `updated_by` varchar(30) NULL COMMENT '被谁更新',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Codelist Book表';
+) ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=utf8 COMMENT='Codelist Book表';
 
 -- Codelist表(下拉菜单等对应的选项数据)
 DROP TABLE IF EXISTS `ea_codelist`;
@@ -249,7 +263,7 @@ DROP TABLE IF EXISTS `ea_codelist`;
 CREATE TABLE `ea_codelist` (
   `id` bigint unsigned NOT NULL COMMEMT '主键ID',
   `parent_id` bigint unsigned NOT NULL COMMEMT 'Codelist Book ID',
-  `code` smallint unsigned COMMENT 'codelist code: 1,2,3,...',
+  `code` int unsigned NOT NULL COMMENT 'codelist code: 1,2,3,...',
   `name` varchar(30) NOT NULL COMMENT 'codelist name',
   `description` text DEFAULT NULL COMMENT '介绍',
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
