@@ -25,21 +25,6 @@ public class Authority extends BaseEntity {
     private String code;
 
     /**
-     * @return the code
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * @param code
-     *            the code to set
-     */
-    public void setCode(final String code) {
-        this.code = code;
-    }
-
-    /**
      * @return the name
      */
     public String getName() {
@@ -52,6 +37,21 @@ public class Authority extends BaseEntity {
      */
     public void setName(final String name) {
         this.name = name;
+    }
+
+    /**
+     * @return the code
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * @param code
+     *            the code to set
+     */
+    public void setCode(final String code) {
+        this.code = code;
     }
 
     @Override
