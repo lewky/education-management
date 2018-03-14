@@ -16,7 +16,7 @@ public class School extends BaseEntity {
 
     private Long schoolNo;
     private String name;
-    private String president;
+    private String presidentName;
     private Long presidentId;
     private String description;
     private String place;
@@ -54,16 +54,16 @@ public class School extends BaseEntity {
     /**
      * @return the president
      */
-    public String getPresident() {
-        return president;
+    public String getPresidentName() {
+        return presidentName;
     }
 
     /**
      * @param president
      *            the president to set
      */
-    public void setPresident(final String president) {
-        this.president = president;
+    public void setPresidentName(final String presidentName) {
+        this.presidentName = presidentName;
     }
 
     /**
@@ -118,8 +118,9 @@ public class School extends BaseEntity {
     @Override
     public String toString() {
         final String baseEntityStr = super.toString();
-        return "School [schoolNo=" + schoolNo + ", name=" + name + ", president=" + president + ", presidentId="
-                + presidentId + ", description=" + description + ", place=" + place + ", " + baseEntityStr + "]";
+        return "School [schoolNo=" + schoolNo + ", name=" + name + ", presidentName=" + presidentName
+                + ", presidentId=" + presidentId + ", description=" + description + ", place=" + place + ", "
+                + baseEntityStr + "]";
     }
 
 }

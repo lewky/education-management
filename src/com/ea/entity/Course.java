@@ -19,7 +19,7 @@ public class Course extends BaseEntity {
     private Long teacherId;
     private Short schoolYear;
     private Byte semester;
-    private Short period;
+    private Float period;
     private Float credit;
     private String majorName;
     private Long majorId;
@@ -34,6 +34,7 @@ public class Course extends BaseEntity {
     private Boolean validated;
     private Boolean arranged;
     private Short selectedNum;
+    private Short maxNum;
 
     /**
      * @return the name
@@ -113,7 +114,7 @@ public class Course extends BaseEntity {
     /**
      * @return the period
      */
-    public Short getPeriod() {
+    public Float getPeriod() {
         return period;
     }
 
@@ -121,7 +122,7 @@ public class Course extends BaseEntity {
      * @param period
      *            the period to set
      */
-    public void setPeriod(final Short period) {
+    public void setPeriod(final Float period) {
         this.period = period;
     }
 
@@ -335,6 +336,21 @@ public class Course extends BaseEntity {
         this.selectedNum = selectedNum;
     }
 
+    /**
+     * @return the maxNum
+     */
+    public Short getMaxNum() {
+        return maxNum;
+    }
+
+    /**
+     * @param maxNum
+     *            the maxNum to set
+     */
+    public void setMaxNum(final Short maxNum) {
+        this.maxNum = maxNum;
+    }
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -347,8 +363,8 @@ public class Course extends BaseEntity {
                 + majorName + ", majorId=" + majorId + ", time=" + time + ", place=" + place + ", description="
                 + description + ", codelistBookCode=" + codelistBookCode + ", codelistBookName=" + codelistBookName
                 + ", courseTypeCode=" + courseTypeCode + ", courseTypeName=" + courseTypeName + ", minor=" + minor
-                + ", validated=" + validated + ", arranged=" + arranged + ", selectedNum=" + selectedNum + ", "
-                + baseEntityStr + "]";
+                + ", validated=" + validated + ", arranged=" + arranged + ", selectedNum=" + selectedNum + ", maxNum="
+                + maxNum + ", " + baseEntityStr + "]";
     }
 
 }
