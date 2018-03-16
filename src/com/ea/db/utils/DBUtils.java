@@ -7,11 +7,15 @@
 // ============================================================================
 package com.ea.db.utils;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -90,6 +94,8 @@ public final class DBUtils {
 
     /**
      * Close ResultSet, Statement & Connection for jdbc.
+     * <P>
+     * This method is null-safe, if ResultSet, Statement & Connection is null, them will not be close.
      *
      * @param rs
      *            jdbc ResultSet
@@ -99,13 +105,19 @@ public final class DBUtils {
      *            jdbc Connection
      */
     public static void release(final ResultSet rs, final Statement st, final Connection conn) {
-        try {
-            if (rs != null && !rs.isClosed()) {
-                rs.close();
-            }
-        } catch (final SQLException e) {
-            LOGGER.error("Failed to close jdbc ResultSet.", e);
-        }
+        releaseResultSet(rs);
+        release(st, conn);
+    }
+
+    /**
+     * Close Statement & Connection for jdbc.
+     * <P>
+     * This method is null-safe, if Statement & Connection is null, them will not be close.
+     *
+     * @param st
+     * @param conn
+     */
+    public static void release(final Statement st, final Connection conn) {
         try {
             if (st != null && !st.isClosed()) {
                 st.close();
@@ -120,5 +132,86 @@ public final class DBUtils {
         } catch (final SQLException e) {
             LOGGER.error("Failed to close jdbc Connection.", e);
         }
+    }
+
+    /**
+     * Close ResultSet.
+     * <P>
+     * This method is null-safe, if ResultSet is null, it will not be close.
+     *
+     * @param rs
+     */
+    public static void releaseResultSet(final ResultSet rs) {
+        try {
+            if (rs != null && !rs.isClosed()) {
+                rs.close();
+            }
+        } catch (final SQLException e) {
+            LOGGER.error("Failed to close jdbc ResultSet.", e);
+        }
+    }
+
+    public static <T> List<T> executeQuery(final Class<T> clazz, final String sql, final Object... params) {
+        final Connection conn = getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<T> list = null;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            if (params.length != 0) {
+                int i = 1;
+                for (final Object param : params) {
+                    pstmt.setObject(i, param);
+                    i++;
+                }
+            }
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                list = new ArrayList<T>();
+                while (rs.next()) {
+                    try {
+                        final T t = clazz.newInstance();
+                        final Field[] fields = clazz.getDeclaredFields();
+                        for (final Field field : fields) {
+                            field.setAccessible(true);
+                            final Object value = rs.getObject(field.getName(), field.getType());
+                            field.set(t, value);
+                        }
+                        list.add(t);
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        LOGGER.error("Failed to execute the query sql.", e);
+                    }
+                }
+            }
+        } catch (final SQLException e) {
+            LOGGER.error("Failed to execute the query sql.", e);
+        } finally {
+            release(rs, pstmt, conn);
+        }
+
+        return list;
+    }
+
+    public static <T> boolean executeUpdate(final Class<T> t, final String sql, final Object... params) {
+        final Connection conn = getConnection();
+        PreparedStatement pstmt = null;
+        int n = 0;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            if (params.length != 0) {
+                int i = 1;
+                for (final Object param : params) {
+                    pstmt.setObject(i, param);
+                    i++;
+                }
+            }
+            n = pstmt.executeUpdate();
+        } catch (final SQLException e) {
+            LOGGER.error("Failed to execute the query sql.", e);
+        } finally {
+            release(pstmt, conn);
+        }
+
+        return false;
     }
 }
