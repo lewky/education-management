@@ -7,8 +7,13 @@
 // ============================================================================
 package com.ea.entity.utils;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.ea.utils.GenerationHelper;
 
 /**
  * @author Lewis.Liu
@@ -16,29 +21,36 @@ import org.slf4j.LoggerFactory;
 public final class EntityUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityUtils.class);
-
     /**
-     * prefix string for toString() method
+     * 常量类的路径后缀
      */
-    private static final String PREFIX_FOR_STRING = " [";
-
+    private static final String SUFFIX_PATH = "/constant";
     /**
-     * suffix string for toString() method
+     * 获取当前项目的绝对路径的key
      */
-    private static final String SUFFIX_FOR_STRING = "]";
-
-    /**
-     * seperator for entity fields
-     */
-    private static final String SEPERATOR_FOR_FIELD = ", ";
-
-    /**
-     * equal sign
-     */
-    private static final String EQUAL_SIGN = "=";
+    private static final String KEY_USER_DIR = "user.dir";
 
     // privatize constructor
     private EntityUtils() {
     }
 
+    public static void genAllEntityConsts() {
+        final String projectPath = System.getProperty(KEY_USER_DIR);
+    }
+
+    public static <T> void genEntityConsts(final Class<T> clazz) {
+
+    }
+//TODO      gen entity fields consts/beanConsts...
+    private static <T> Map<String, Object> getFields(final Class<T> clazz, final boolean isConsts) {
+        final Field[] fields = clazz.getDeclaredFields();
+        Map<String, Object> newFields = null;
+        if (fields.length <= 0) {
+            return newFields;
+        }
+        final GenerationHelper helper = new GenerationHelper(isConsts);
+        newFields = helper.parseFields(fields);
+
+        return newFields;
+    }
 }

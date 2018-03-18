@@ -8,6 +8,7 @@
 package com.ea.utils;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,16 +19,16 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Lewis.Liu
  */
-public final class CamelNameUtils {
+public final class NameUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CamelNameUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NameUtils.class);
 
     private static final String REGEX_CAMEL_CASE = "[a-z][A-Z]";
     private static final String REGEX_UNDERSCORE_CASE = "_[a-zA-Z]";
     private static final String SEPARATOR_UNDERSCORE = "_";
 
     // privatize constructor
-    private CamelNameUtils() {
+    private NameUtils() {
     }
 
     /**
@@ -36,7 +37,7 @@ public final class CamelNameUtils {
      * DemoOne -> demo_one
      * <p>
      * null -> ""
-     *
+     * 
      * @param str
      * @return
      */
@@ -65,7 +66,7 @@ public final class CamelNameUtils {
      * demo_one -> DemoOne
      * <p>
      * null -> ""
-     *
+     * 
      * @param str
      * @return
      */
@@ -78,7 +79,6 @@ public final class CamelNameUtils {
         String target = null;
         String temp = null;
         String result = str;
-        final StringBuilder builder = new StringBuilder();
         while (matcher.find()) {
             target = matcher.group();
             temp = StringUtils.substring(target, 1);
@@ -86,5 +86,35 @@ public final class CamelNameUtils {
             result = StringUtils.replace(result, target, temp);
         }
         return StringUtils.capitalize(result);
+    }
+
+    /**
+     * Abbreviate the input string for db table name.
+     * <p>
+     * null -> ""
+     * <p>
+     * ea_class_student -> ecs
+     * 
+     * @param str
+     * @return
+     */
+    public static String abbreviateName(String str) {
+        if (StringUtils.isBlank(str)) {
+            return "";
+        }
+        final Pattern pattern = Pattern.compile(REGEX_UNDERSCORE_CASE);
+        final Matcher matcher = pattern.matcher(str);
+        String target = null;
+        String temp = null;
+        String result = str;
+        final StringBuilder builder = new StringBuilder();
+        builder.append(StringUtils.substring(result, 0, 1));
+        while (matcher.find()) {
+            target = matcher.group();
+            temp = StringUtils.substring(target, 1);
+            builder.append(temp);
+        }
+        result = Objects.toString(builder);
+        return StringUtils.lowerCase(result, Locale.US);
     }
 }
