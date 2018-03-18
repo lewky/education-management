@@ -56,8 +56,7 @@ public class Authority extends BaseEntity {
 
     @Override
     public String toString() {
-        final String baseEntityStr = super.toString();
-        return "Authority [name=" + name + ", code=" + code + ", " + baseEntityStr + "]";
+        return "Authority [name=" + name + ", code=" + code + ", " + super.toString() + "]";
     }
 
 }

@@ -42,7 +42,6 @@ public class Role extends BaseEntity {
 
     @Override
     public String toString() {
-        final String baseEntityStr = super.toString();
-        return "Role [name=" + name + ", valid=" + valid + ", " + baseEntityStr + "]";
+        return "Role [name=" + name + ", valid=" + valid + ", " + super.toString() + "]";
     }
 }

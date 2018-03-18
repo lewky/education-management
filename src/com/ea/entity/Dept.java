@@ -165,9 +165,8 @@ public class Dept extends BaseEntity {
      */
     @Override
     public String toString() {
-        final String baseEntityStr = super.toString();
         return "Dept [deptNo=" + deptNo + ", name=" + name + ", schoolName=" + schoolName + ", schoolId=" + schoolId
                 + ", dean=" + dean + ", deanId=" + deanId + ", description=" + description + ", place=" + place
-                + ", telephone=" + telephone + ", " + baseEntityStr + "]";
+                + ", telephone=" + telephone + ", " + super.toString() + "]";
     }
 }

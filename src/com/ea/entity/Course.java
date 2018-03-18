@@ -357,14 +357,13 @@ public class Course extends BaseEntity {
      */
     @Override
     public String toString() {
-        final String baseEntityStr = super.toString();
         return "Course [name=" + name + ", teacherName=" + teacherName + ", teacherId=" + teacherId + ", schoolYear="
                 + schoolYear + ", semester=" + semester + ", period=" + period + ", credit=" + credit + ", majorName="
                 + majorName + ", majorId=" + majorId + ", time=" + time + ", place=" + place + ", description="
                 + description + ", codelistBookCode=" + codelistBookCode + ", codelistBookName=" + codelistBookName
                 + ", courseTypeCode=" + courseTypeCode + ", courseTypeName=" + courseTypeName + ", minor=" + minor
                 + ", validated=" + validated + ", arranged=" + arranged + ", selectedNum=" + selectedNum + ", maxNum="
-                + maxNum + ", " + baseEntityStr + "]";
+                + maxNum + ", " + super.toString() + "]";
     }
 
 }

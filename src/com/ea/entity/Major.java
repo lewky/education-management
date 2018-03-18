@@ -149,10 +149,9 @@ public class Major extends BaseEntity {
      */
     @Override
     public String toString() {
-        final String baseEntityStr = super.toString();
         return "Major [majorNo=" + majorNo + ", name=" + name + ", deptName=" + deptName + ", deptId=" + deptId
                 + ", assistant=" + assistant + ", assistantId=" + assistantId + ", telephone=" + telephone
-                + ", description=" + description + ", " + baseEntityStr + "]";
+                + ", description=" + description + ", " + super.toString() + "]";
     }
 
 }

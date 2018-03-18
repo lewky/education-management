@@ -117,10 +117,9 @@ public class School extends BaseEntity {
      */
     @Override
     public String toString() {
-        final String baseEntityStr = super.toString();
         return "School [schoolNo=" + schoolNo + ", name=" + name + ", presidentName=" + presidentName
                 + ", presidentId=" + presidentId + ", description=" + description + ", place=" + place + ", "
-                + baseEntityStr + "]";
+                + super.toString() + "]";
     }
 
 }

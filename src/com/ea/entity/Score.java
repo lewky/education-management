@@ -101,9 +101,8 @@ public class Score extends BaseEntity {
      */
     @Override
     public String toString() {
-        final String baseEntityStr = super.toString();
         return "Score [parentId=" + parentId + ", regularScore=" + regularScore + ", midtermScore=" + midtermScore
-                + ", terminalScore=" + terminalScore + ", score=" + score + ", " + baseEntityStr + "]";
+                + ", terminalScore=" + terminalScore + ", score=" + score + ", " + super.toString() + "]";
     }
 
 }
