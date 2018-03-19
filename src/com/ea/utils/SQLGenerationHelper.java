@@ -3,14 +3,12 @@
 // CURRENT VERSION EA.1.0.0
 // ============================================================================
 // CHANGE LOG
-// EA.1.0.0 : 2018-3-12, Lewis.Liu created
+// EA.1.0.0 : 2018年3月19日, Lewis.Liu created
 // ============================================================================
 package com.ea.utils;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -23,17 +21,9 @@ import com.ea.entity.BaseEntity;
 /**
  * @author Lewis.Liu
  */
-public final class GenerationHelper {
+public class SQLGenerationHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenerationHelper.class);
-
-    private static final String FIELD_SERIAL_VERSION_UID = "serialVersionUID";
-    private static final String MODIFIER_CONSTS = "public static final ";
-    private static final String FIELD_TYPE_STRING = "String";
-    private static final String FIELD_TYPE_DATE = "Date";
-    private static final String KEY_FILED_NAME = "fieldName";
-    private static final String KEY_FILED_TYPE = "fieldType";
-    private static final String KEY_FILED_MODIFIER = "fieldModifier";
+    private static final Logger LOGGER = LoggerFactory.getLogger(SQLGenerationHelper.class);
 
     // const variables for generating sql
     private static final String SQL_INSERT_INTO_SELECT = "insert into %1$s%2$s %3$s %n select %4$s;";
@@ -48,44 +38,15 @@ public final class GenerationHelper {
     private static final String SEPARATOR_COMMA = ",";
 
     /**
-     * 要生成的java文件是否是常量类
-     */
-    private boolean consts;
-
-    public GenerationHelper() {
-    }
-
-    public GenerationHelper(final boolean consts) {
-        this.consts = consts;
-    }
-
-    // TODO generation helper to generate Consts/FormEntity
-    public Map<String, Object> parseFields(final Field... fields) {
-        final Map<String, Object> result = new HashMap<String, Object>();
-        for (final Field field : fields) {
-            field.setAccessible(true);
-            final String fieldName = field.getName();
-            if (StringUtils.equals(fieldName, FIELD_SERIAL_VERSION_UID)) {
-                continue;
-            }
-            final String fieldType = field.getType().getName();
-            result.put(KEY_FILED_NAME, fieldName);
-            result.put(KEY_FILED_TYPE, fieldType);
-            result.put(KEY_FILED_MODIFIER, MODIFIER_CONSTS);
-        }
-        return result;
-    }
-
-    /**
      * Generate insert sql for entity.
-     * 
+     *
      * @param clazz
      * @return
      */
     public <T> String genInsertSQL(final Class<T> clazz) {
         Field[] fields = clazz.getDeclaredFields();
         if (!StringUtils.equals(clazz.getName(), BaseEntity.class.getName())) {
-            Field[] commonFields = BaseEntity.class.getDeclaredFields();
+            final Field[] commonFields = BaseEntity.class.getDeclaredFields();
             fields = ArrayUtils.addAll(fields, commonFields);
         }
         final String className = clazz.getSimpleName();
@@ -107,7 +68,7 @@ public final class GenerationHelper {
         for (final Field field : fields) {
             field.setAccessible(true);
             final String fieldName = field.getName();
-            if (StringUtils.equals(fieldName, FIELD_SERIAL_VERSION_UID)) {
+            if (StringUtils.equals(fieldName, ContsGenerationHelper.FIELD_SERIAL_VERSION_UID)) {
                 continue;
             }
             if (hasAlias) {
