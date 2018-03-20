@@ -5,7 +5,7 @@
 // CHANGE LOG
 // EA.1.0.0 : 2018-3-17, Lewis.Liu created
 // ============================================================================
-package com.ea.utils;
+package com.ea.util;
 
 import java.util.Locale;
 import java.util.Objects;

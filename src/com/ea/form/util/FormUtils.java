@@ -5,7 +5,7 @@
 // CHANGE LOG
 // EA.1.0.0 : 2018-3-17, Lewis.Liu created
 // ============================================================================
-package com.ea.form.entity.utils;
+package com.ea.form.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -17,12 +17,12 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Lewis.Liu
  */
-public final class FormEntityUtils {
+public final class FormUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FormEntityUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FormUtils.class);
 
     // privatize constructor
-    private FormEntityUtils() {
+    private FormUtils() {
     }
 
     public static <T> T fillFormEntity(final Class<T> clazz, final Map<String, String[]> properties) {

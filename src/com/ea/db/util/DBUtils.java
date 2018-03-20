@@ -5,7 +5,7 @@
 // CHANGE LOG
 // EA.1.0.0 : 2018-1-12, Lewis.Liu created
 // ============================================================================
-package com.ea.db.utils;
+package com.ea.db.util;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;

@@ -5,15 +5,13 @@
 // CHANGE LOG
 // EA.1.0.0 : 2018-2-2, Lewis.Liu created
 // ============================================================================
-package com.ea.entity.utils;
+package com.ea.entity.util;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.ea.utils.ContsGenerationHelper;
 
 /**
  * @author Lewis.Liu
@@ -44,12 +42,10 @@ public final class EntityUtils {
 //TODO      gen entity fields consts/beanConsts...
     private static <T> Map<String, Object> getFields(final Class<T> clazz, final boolean isConsts) {
         final Field[] fields = clazz.getDeclaredFields();
-        Map<String, Object> newFields = null;
+        final Map<String, Object> newFields = null;
         if (fields.length <= 0) {
             return newFields;
         }
-        final ContsGenerationHelper helper = new ContsGenerationHelper(isConsts);
-        newFields = helper.parseFields(fields);
 
         return newFields;
     }
