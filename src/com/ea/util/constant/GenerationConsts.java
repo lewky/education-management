@@ -26,8 +26,17 @@ public class GenerationConsts {
 
     // const variables for generating Consts/FormEntity
     public static final String FIELD_SERIAL_VERSION_UID = "serialVersionUID";
-    public static final String FIELD_IN_CONSTS = "public static final String %1$s = \"%2$s\";%n";
-    public static final String FIELD_IN_FORM = "private String %1$s = \"%2$s\";%n";
+    public static final String CODE_HEADER_COMMENT = "// Copyright (c) %1$s-%2$s %3$s Limited. All rights reserved.\r\n"
+            + "// ============================================================================\r\n"
+            + "// CURRENT VERSION %4$s\r\n"
+            + "// ============================================================================\r\n"
+            + "// CHANGE LOG\r\n" + "// %4$s : %5$s, %3$s created\r\n"
+            + "// ============================================================================";
     public static final String CODE_PACKAGE = "package %1$s.constant.%2$s;%n";
-    public static final String CODE_IMPORT_STRING = "import java.lang.String;%n";
+    public static final String TEMPLATE_CONSTS_FILE = "public class %1$sConsts {%n%n%1$s}";
+    public static final String TEMPLATE_FORM_FILE = "public class %1$sForm {%n%n%1$s}";
+    public static final String FIELD_IN_CONSTS = "\tpublic static final String %1$s = \"%2$s\";%n";
+    public static final String FIELD_IN_FORM = "\tprivate String %1$s;%n";
+    public static final String SETTER_METHOD = "\tpublic void set%1$s(String %2$s) {%n\t\tthis.%2$s = %2$s;%n\t}%n%n";
+    public static final String GETTER_METHOD = "\tpublic String get%1$s() {%n\t\treturn %2$s;%n\t}%n%n";
 }
