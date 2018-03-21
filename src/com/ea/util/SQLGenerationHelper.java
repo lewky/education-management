@@ -26,13 +26,17 @@ public class SQLGenerationHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SQLGenerationHelper.class);
 
+    // privatize constructor
+    private SQLGenerationHelper() {
+    }
+
     /**
      * Generate insert sql for entity.
      *
      * @param clazz
      * @return
      */
-    public <T> String genInsertSQL(final Class<T> clazz) {
+    public static <T> String genInsertSQL(final Class<T> clazz) {
         Field[] fields = clazz.getDeclaredFields();
         if (!StringUtils.equals(clazz.getName(), BaseEntity.class.getName())) {
             final Field[] commonFields = BaseEntity.class.getDeclaredFields();
@@ -51,7 +55,7 @@ public class SQLGenerationHelper {
                 NameUtils.camel2underscore(className), fieldsStr, sqlBody);
     }
 
-    private String fields2String(final boolean hasAlias, final Field... fields) {
+    private static String fields2String(final boolean hasAlias, final Field... fields) {
         if (ArrayUtils.isEmpty(fields)) {
             return "";
         }
