@@ -5,7 +5,7 @@
 // CHANGE LOG
 // EA.1.0.0 : 2018-3-17, Lewis.Liu created
 // ============================================================================
-package com.ea.form.util;
+package com.ea.entity.form.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
