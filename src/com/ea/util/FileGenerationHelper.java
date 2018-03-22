@@ -8,6 +8,10 @@
 package com.ea.util;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -59,17 +63,33 @@ public final class FileGenerationHelper {
     }
 
     /**
-     * Generate fields in Consts or FormEntity java file.
-     * @param clazz
-     * @param isConsts
+     * Generate header comment in java file.
      * @return
      */
-    public static <T> String genFields(final Class<T> clazz, final boolean isConsts) {
-        final Field[] fields = clazz.getDeclaredFields();
+    public static String genHeaderComment() {
+        final Calendar calendar = Calendar.getInstance();
+        final SimpleDateFormat dateFomat = new SimpleDateFormat(GenerationConsts.DEFAULT_DATE_FORMAT);
+        final String projectStartDate = StringUtils.isNotBlank(PROJECT_START_DATE) ? PROJECT_START_DATE
+                : calendar.get(Calendar.YEAR) + "";
+        final String projectAuthor = StringUtils.isNotBlank(PROJECT_AUTHOR) ? PROJECT_AUTHOR
+                : GenerationConsts.DEFAULT_AUTHOR;
+        final String projectVersion = StringUtils.isNotBlank(PROJECT_VERSION) ? PROJECT_VERSION
+                : GenerationConsts.DEFAULT_VERSION;
+
+        return String.format(GenerationConsts.CODE_HEADER_COMMENT, projectStartDate, calendar.get(Calendar.YEAR),
+                projectAuthor, projectVersion, dateFomat.format(calendar.getTime()));
+
+    }
+
+    /**
+     * Generate fields in Consts or FormEntity java file.
+     * @param isConsts
+     * @param fields
+     * @return
+     */
+    public static <T> String genFields(final boolean isConsts, final List<String> fieldNames) {
         final StringBuilder builder = new StringBuilder();
-        for (final Field field : fields) {
-            field.setAccessible(true);
-            final String fieldName = field.getName();
+        for (final String fieldName : fieldNames) {
             String newfieldName = "";
             if (StringUtils.equals(fieldName, GenerationConsts.FIELD_SERIAL_VERSION_UID)) {
                 continue;
@@ -89,11 +109,9 @@ public final class FileGenerationHelper {
      * @param fields
      * @return
      */
-    public static String genMethod(final Field... fields) {
+    public static String genMethod(final List<String> fieldNames) {
         final StringBuilder builder = new StringBuilder();
-        for (final Field field : fields) {
-            field.setAccessible(true);
-            final String fieldName = field.getName();
+        for (final String fieldName : fieldNames) {
             builder.append(String.format(GenerationConsts.SETTER_METHOD, StringUtils.capitalize(fieldName), fieldName))
                     .append(String.format(GenerationConsts.GETTER_METHOD, StringUtils.capitalize(fieldName),
                             fieldName));
@@ -105,10 +123,28 @@ public final class FileGenerationHelper {
     // TODO : gen java files
     public static <T> String genJavaFiles(final Class<T> clazz, final boolean isConsts) {
         final StringBuilder builder = new StringBuilder();
+        builder.append(genHeaderComment());
+        final String packageName = StringUtils.substringBeforeLast(clazz.getName(), GenerationConsts.SEPARATOR_DOT);
+        final String simpleName = clazz.getSimpleName();
+        final Field[] fields = clazz.getDeclaredFields();
+        final List<String> fieldNames = new ArrayList<String>();
+        for (final Field field : fields) {
+            field.setAccessible(true);
+            final String fieldName = field.getName();
+            if (StringUtils.equals(fieldName, GenerationConsts.FIELD_SERIAL_VERSION_UID)) {
+                continue;
+            }
+            fieldNames.add(fieldName);
+        }
+        String fileBody = genFields(isConsts, fieldNames);
         if (isConsts) {
-
+            builder.append(String.format(GenerationConsts.CODE_PACKAGE_CONSTS, packageName))
+                    .append(String.format(GenerationConsts.CONSTS_FILE_TEMPLATE, simpleName, fileBody));
         } else {
-
+            builder.append(String.format(GenerationConsts.CODE_PACKAGE_FORM, packageName))
+                    .append(GenerationConsts.CODE_IMPORT_FORM);
+            fileBody = Objects.toString(new StringBuilder(fileBody).append(genMethod(fieldNames)));
+            builder.append(String.format(GenerationConsts.FORM_FILE_TEMPLATE, simpleName, fileBody));
         }
         return Objects.toString(builder);
     }
