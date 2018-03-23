@@ -45,4 +45,10 @@ public class GenerationConsts {
     public static final String FIELD_IN_FORM = "\tprivate String %1$s;%n";
     public static final String SETTER_METHOD = "\n\tpublic void set%1$s(String %2$s) {%n\t\tthis.%2$s = %2$s;\n\t}\n";
     public static final String GETTER_METHOD = "\n\tpublic String get%1$s() {%n\t\treturn %2$s;\n\t}\n";
+
+    // key to get the absolute path of project
+    public static final String KEY_USER_DIR = "user.dir";
+    public static final String SEPARATOR_PATH = "\\";
+    public static final String SUFFIX_FOR_CONSTS_PATH = "Consts.java";
+    public static final String SUFFIX_FOR_FORM_PATH = "Form.java";
 }

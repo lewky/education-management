@@ -7,6 +7,7 @@
 // ============================================================================
 package com.ea.util;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public final class FileGenerationHelper {
      * Generate header comment in java file.
      * @return
      */
-    public static String genHeaderComment() {
+    private static String genHeaderComment() {
         final Calendar calendar = Calendar.getInstance();
         final SimpleDateFormat dateFomat = new SimpleDateFormat(GenerationConsts.DEFAULT_DATE_FORMAT);
         final String projectStartDate = StringUtils.isNotBlank(PROJECT_START_DATE) ? PROJECT_START_DATE
@@ -87,7 +88,7 @@ public final class FileGenerationHelper {
      * @param fields
      * @return
      */
-    public static <T> String genFields(final boolean isConsts, final List<String> fieldNames) {
+    private static <T> String genFields(final boolean isConsts, final List<String> fieldNames) {
         final StringBuilder builder = new StringBuilder();
         for (final String fieldName : fieldNames) {
             String newfieldName = "";
@@ -109,7 +110,7 @@ public final class FileGenerationHelper {
      * @param fields
      * @return
      */
-    public static String genMethod(final List<String> fieldNames) {
+    private static String genMethod(final List<String> fieldNames) {
         final StringBuilder builder = new StringBuilder();
         for (final String fieldName : fieldNames) {
             builder.append(String.format(GenerationConsts.SETTER_METHOD, StringUtils.capitalize(fieldName), fieldName))
@@ -120,8 +121,14 @@ public final class FileGenerationHelper {
         return Objects.toString(builder);
     }
 
-    // TODO : gen java files
-    public static <T> String genJavaFiles(final Class<T> clazz, final boolean isConsts) {
+    /**
+     * Generate java file for entity, if isConsts is true, it will generate entity consts;
+     * if isConsts is false, it will generate entity form.
+     * @param clazz
+     * @param isConsts
+     * @return
+     */
+    private static <T> String genJavaFile(final Class<T> clazz, final boolean isConsts) {
         final StringBuilder builder = new StringBuilder();
         builder.append(genHeaderComment());
         final String packageName = StringUtils.substringBeforeLast(clazz.getName(), GenerationConsts.SEPARATOR_DOT);
@@ -147,5 +154,23 @@ public final class FileGenerationHelper {
             builder.append(String.format(GenerationConsts.FORM_FILE_TEMPLATE, simpleName, fileBody));
         }
         return Objects.toString(builder);
+    }
+
+    /**
+     * Generate entity consts file for a entity.
+     * @param clazz
+     */
+    public static <T> void genEntityConsts(final Class<T> clazz) {
+        final String projectPath = System.getProperty(GenerationConsts.KEY_USER_DIR);
+        final StringBuilder builder = new StringBuilder();
+        builder.append(projectPath).append(GenerationConsts.SEPARATOR_PATH).append(clazz.getName())
+                .append(GenerationConsts.SUFFIX_FOR_CONSTS_PATH);
+        final String targetPath = StringUtils.isNotBlank(GEN_FILE_TARGET_PATH) ? GEN_FILE_TARGET_PATH
+                : Objects.toString(builder);
+        final File file = new File(targetPath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
     }
 }
