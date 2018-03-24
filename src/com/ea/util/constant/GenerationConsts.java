@@ -48,7 +48,9 @@ public class GenerationConsts {
 
     // key to get the absolute path of project
     public static final String KEY_USER_DIR = "user.dir";
+
     public static final String SEPARATOR_PATH = "\\";
     public static final String SUFFIX_FOR_CONSTS_PATH = "Consts.java";
     public static final String SUFFIX_FOR_FORM_PATH = "Form.java";
+    public static final String UTF_8 = "UTF-8";
 }

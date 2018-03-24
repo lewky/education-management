@@ -13,6 +13,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ea.util.FileGenerationHelper;
+
 /**
  * @author Lewis.Liu
  */
@@ -32,8 +34,29 @@ public final class EntityUtils {
 
     }
 
+    /**
+     * Generate consts file for entity.
+     * @param clazz
+     */
     public static <T> void genEntityConsts(final Class<T> clazz) {
+        FileGenerationHelper.genEntityFile(clazz, true);
+    }
 
+    /**
+     * Generate form files for entity.
+     * @param clazz
+     */
+    public static <T> void genEntityForm(final Class<T> clazz) {
+        FileGenerationHelper.genEntityFile(clazz, false);
+    }
+
+    /**
+     * Generate consts & form files for entity.
+     * @param clazz
+     */
+    public static <T> void genFiles4Entity(final Class<T> clazz) {
+        genEntityConsts(clazz);
+        genEntityForm(clazz);
     }
 
     // TODO gen entity fields consts/beanConsts...

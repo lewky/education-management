@@ -8,6 +8,9 @@
 package com.ea.util;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -157,20 +161,45 @@ public final class FileGenerationHelper {
     }
 
     /**
-     * Generate entity consts file for a entity.
+     * Generate entity consts/form file for a entity.
      * @param clazz
+     * @param isConsts
      */
-    public static <T> void genEntityConsts(final Class<T> clazz) {
+    public static <T> void genEntityFile(final Class<T> clazz, final boolean isConsts) {
         final String projectPath = System.getProperty(GenerationConsts.KEY_USER_DIR);
-        final StringBuilder builder = new StringBuilder();
-        builder.append(projectPath).append(GenerationConsts.SEPARATOR_PATH).append(clazz.getName())
-                .append(GenerationConsts.SUFFIX_FOR_CONSTS_PATH);
+        final StringBuilder pathBuilder = new StringBuilder();
+        // FIXME: target path is not true, lose constant / form
+        String temp = StringUtils.replace(clazz.getName(), GenerationConsts.SEPARATOR_DOT,
+                GenerationConsts.SEPARATOR_PATH);
+        temp = StringUtils.substringBeforeLast(temp, GenerationConsts.SEPARATOR_PATH);
+        pathBuilder.append(projectPath).append(GenerationConsts.SEPARATOR_PATH).append(temp);
         final String targetPath = StringUtils.isNotBlank(GEN_FILE_TARGET_PATH) ? GEN_FILE_TARGET_PATH
-                : Objects.toString(builder);
+                : Objects.toString(pathBuilder);
+        final StringBuilder nameBuilder = new StringBuilder();
+        if (isConsts) {
+            nameBuilder.append(clazz.getSimpleName()).append(GenerationConsts.SUFFIX_FOR_CONSTS_PATH);
+        } else {
+            nameBuilder.append(clazz.getSimpleName()).append(GenerationConsts.SUFFIX_FOR_FORM_PATH);
+        }
+        final String fileName = Objects.toString(nameBuilder);
+        final String fullPath = Objects
+                .toString(new StringBuilder(targetPath).append(GenerationConsts.SEPARATOR_PATH).append(fileName));
         final File file = new File(targetPath);
         if (!file.exists()) {
             file.mkdirs();
         }
-
+        OutputStream os = null;
+        try {
+            os = new FileOutputStream(new File(fullPath), false);
+            os.write(genJavaFile(clazz, isConsts).getBytes(GenerationConsts.UTF_8));
+        } catch (final IOException e) {
+            if (isConsts) {
+                LOGGER.error("Failed to generate consts file for entity.", e);
+            } else {
+                LOGGER.error("Failed to generate form file for entity.", e);
+            }
+        } finally {
+            IOUtils.closeQuietly(os);
+        }
     }
 }
