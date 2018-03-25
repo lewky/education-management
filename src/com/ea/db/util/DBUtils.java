@@ -75,8 +75,7 @@ public final class DBUtils {
     }
 
     // privatize constructor
-    private DBUtils() {
-    }
+    private DBUtils() {}
 
     /**
      * Get jdbc connection to connect db.

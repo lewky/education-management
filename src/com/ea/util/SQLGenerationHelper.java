@@ -27,8 +27,7 @@ public class SQLGenerationHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(SQLGenerationHelper.class);
 
     // privatize constructor
-    private SQLGenerationHelper() {
-    }
+    private SQLGenerationHelper() {}
 
     /**
      * Generate insert sql for entity.

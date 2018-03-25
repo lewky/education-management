@@ -28,8 +28,7 @@ public final class NameUtils {
     private static final String SEPARATOR_UNDERSCORE = "_";
 
     // privatize constructor
-    private NameUtils() {
-    }
+    private NameUtils() {}
 
     /**
      * Change the camelCase to underscoreCase.

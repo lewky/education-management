@@ -325,10 +325,9 @@ public class User extends BaseEntity {
     public String toString() {
         return "User [loginId=" + loginId + ", password=" + password + ", passwordSalt=" + passwordSalt + ", roleId="
                 + roleId + ", valid=" + valid + ", state=" + state + ", firstName=" + firstName + ", lastName="
-                + lastName + ", avator=" + avator + ", gender=" + gender + ", birthday=" + birthday + ", email="
-                + email + ", telephone=" + telephone + ", teacherTitle=" + teacherTitle + ", inDate=" + inDate
-                + ", inGrade=" + inGrade + ", outDate=" + outDate + ", lastLogin=" + lastLogin + ", "
-                + super.toString() + "]";
+                + lastName + ", avator=" + avator + ", gender=" + gender + ", birthday=" + birthday + ", email=" + email
+                + ", telephone=" + telephone + ", teacherTitle=" + teacherTitle + ", inDate=" + inDate + ", inGrade="
+                + inGrade + ", outDate=" + outDate + ", lastLogin=" + lastLogin + ", " + super.toString() + "]";
     }
 
 }

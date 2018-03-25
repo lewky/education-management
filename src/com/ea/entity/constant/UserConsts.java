@@ -31,6 +31,5 @@ public class UserConsts {
     public static final String FIELD_OUT_DATE = "outDate";
     public static final String FIELD_LAST_LOGIN = "lastLogin";
 
-    private UserConsts() {
-    }
+    private UserConsts() {}
 }

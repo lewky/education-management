@@ -23,8 +23,7 @@ public final class EntityUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityUtils.class);
 
     // privatize constructor
-    private EntityUtils() {
-    }
+    private EntityUtils() {}
 
     public static void genAllEntityConsts(final String srcPath) {
 

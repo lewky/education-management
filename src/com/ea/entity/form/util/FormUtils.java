@@ -22,8 +22,7 @@ public final class FormUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(FormUtils.class);
 
     // privatize constructor
-    private FormUtils() {
-    }
+    private FormUtils() {}
 
     public static <T> T fillFormEntity(final Class<T> clazz, final Map<String, String[]> properties) {
         T t = null;

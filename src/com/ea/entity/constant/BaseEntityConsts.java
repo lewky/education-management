@@ -17,6 +17,5 @@ public class BaseEntityConsts {
     public static final String FIELD_UPDATED_ON = "updatedOn";
     public static final String FIELD_UPDATED_BY = "updatedBy";
 
-    private BaseEntityConsts() {
-    }
+    private BaseEntityConsts() {}
 }
