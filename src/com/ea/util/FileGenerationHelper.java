@@ -64,8 +64,7 @@ public final class FileGenerationHelper {
     }
 
     // privatize constructor
-    private FileGenerationHelper() {
-    }
+    private FileGenerationHelper() {}
 
     /**
      * Generate header comment in java file.
@@ -135,7 +134,7 @@ public final class FileGenerationHelper {
     private static <T> String genJavaFile(final Class<T> clazz, final boolean isConsts) {
         final StringBuilder builder = new StringBuilder();
         builder.append(genHeaderComment());
-        final String packageName = StringUtils.substringBeforeLast(clazz.getName(), GenerationConsts.SEPARATOR_DOT);
+        final String packageName = getPackageName(clazz);
         final String simpleName = clazz.getSimpleName();
         final Field[] fields = clazz.getDeclaredFields();
         final List<String> fieldNames = new ArrayList<String>();
@@ -161,25 +160,38 @@ public final class FileGenerationHelper {
     }
 
     /**
+     * Get package name of class.
+     * @param clazz
+     * @return
+     */
+    private static <T> String getPackageName(final Class<T> clazz) {
+        final String packageName = StringUtils.substringBeforeLast(clazz.getName(), GenerationConsts.SEPARATOR_DOT);
+        return packageName;
+    }
+
+    /**
      * Generate entity consts/form file for a entity.
      * @param clazz
      * @param isConsts
      */
     public static <T> void genEntityFile(final Class<T> clazz, final boolean isConsts) {
-        final String projectPath = System.getProperty(GenerationConsts.KEY_USER_DIR);
+        String basePath = System.getProperty(GenerationConsts.KEY_USER_DIR);
+        basePath = StringUtils.isNotBlank(GEN_FILE_TARGET_PATH) ? GEN_FILE_TARGET_PATH : basePath;
         final StringBuilder pathBuilder = new StringBuilder();
-        // FIXME: target path is not true, lose constant / form
-        String temp = StringUtils.replace(clazz.getName(), GenerationConsts.SEPARATOR_DOT,
+        String temp = StringUtils.replace(getPackageName(clazz), GenerationConsts.SEPARATOR_DOT,
                 GenerationConsts.SEPARATOR_PATH);
-        temp = StringUtils.substringBeforeLast(temp, GenerationConsts.SEPARATOR_PATH);
-        pathBuilder.append(projectPath).append(GenerationConsts.SEPARATOR_PATH).append(temp);
-        final String targetPath = StringUtils.isNotBlank(GEN_FILE_TARGET_PATH) ? GEN_FILE_TARGET_PATH
-                : Objects.toString(pathBuilder);
+        if (isConsts) {
+            temp = temp + GenerationConsts.SUFFIX_FOR_CONSTS_PATH;
+        } else {
+            temp = temp + GenerationConsts.SUFFIX_FOR_FORM_PATH;
+        }
+        pathBuilder.append(basePath).append(GenerationConsts.SEPARATOR_PATH).append(temp);
+        final String targetPath = Objects.toString(pathBuilder);
         final StringBuilder nameBuilder = new StringBuilder();
         if (isConsts) {
-            nameBuilder.append(clazz.getSimpleName()).append(GenerationConsts.SUFFIX_FOR_CONSTS_PATH);
+            nameBuilder.append(clazz.getSimpleName()).append(GenerationConsts.SUFFIX_FOR_CONSTS_NAME);
         } else {
-            nameBuilder.append(clazz.getSimpleName()).append(GenerationConsts.SUFFIX_FOR_FORM_PATH);
+            nameBuilder.append(clazz.getSimpleName()).append(GenerationConsts.SUFFIX_FOR_FORM_NAME);
         }
         final String fileName = Objects.toString(nameBuilder);
         final String fullPath = Objects

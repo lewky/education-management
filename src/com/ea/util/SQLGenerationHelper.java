@@ -13,8 +13,6 @@ import java.util.Objects;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.ea.entity.BaseEntity;
 import com.ea.util.constant.GenerationConsts;
@@ -23,8 +21,6 @@ import com.ea.util.constant.GenerationConsts;
  * @author Lewis.Liu
  */
 public class SQLGenerationHelper {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SQLGenerationHelper.class);
 
     // privatize constructor
     private SQLGenerationHelper() {}

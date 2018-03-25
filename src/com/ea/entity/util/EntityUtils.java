@@ -7,9 +7,6 @@
 // ============================================================================
 package com.ea.entity.util;
 
-import java.lang.reflect.Field;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,14 +55,4 @@ public final class EntityUtils {
         genEntityForm(clazz);
     }
 
-    // TODO gen entity fields consts/beanConsts...
-    private static <T> Map<String, Object> getFields(final Class<T> clazz, final boolean isConsts) {
-        final Field[] fields = clazz.getDeclaredFields();
-        final Map<String, Object> newFields = null;
-        if (fields.length <= 0) {
-            return newFields;
-        }
-
-        return newFields;
-    }
 }

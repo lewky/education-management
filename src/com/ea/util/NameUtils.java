@@ -13,15 +13,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Lewis.Liu
  */
 public final class NameUtils {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(NameUtils.class);
 
     private static final String REGEX_CAMEL_CASE = "[a-z][A-Z]";
     private static final String REGEX_UNDERSCORE_CASE = "_[a-zA-Z]";
@@ -36,7 +32,7 @@ public final class NameUtils {
      * DemoOne -> demo_one
      * <p>
      * null -> ""
-     * 
+     *
      * @param str
      * @return
      */
@@ -65,7 +61,7 @@ public final class NameUtils {
      * demo_one -> DemoOne
      * <p>
      * null -> ""
-     * 
+     *
      * @param str
      * @return
      */
@@ -93,11 +89,11 @@ public final class NameUtils {
      * null -> ""
      * <p>
      * ea_class_student -> ecs
-     * 
+     *
      * @param str
      * @return
      */
-    public static String abbreviateName(String str) {
+    public static String abbreviateName(final String str) {
         if (StringUtils.isBlank(str)) {
             return "";
         }
