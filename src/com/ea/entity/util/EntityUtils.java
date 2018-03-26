@@ -10,7 +10,7 @@ package com.ea.entity.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ea.util.FileGenerationHelper;
+import com.ea.util.FileGenerator;
 
 /**
  * @author Lewis.Liu
@@ -35,7 +35,7 @@ public final class EntityUtils {
      * @param clazz
      */
     public static <T> void genEntityConsts(final Class<T> clazz) {
-        FileGenerationHelper.genEntityFile(clazz, true);
+        FileGenerator.genEntityFile(clazz, true);
     }
 
     /**
@@ -43,7 +43,7 @@ public final class EntityUtils {
      * @param clazz
      */
     public static <T> void genEntityForm(final Class<T> clazz) {
-        FileGenerationHelper.genEntityFile(clazz, false);
+        FileGenerator.genEntityFile(clazz, false);
     }
 
     /**

@@ -10,7 +10,7 @@ package com.ea.util.constant;
 /**
  * @author Lewis.Liu
  */
-public class GenerationConsts {
+public class GeneratorConsts {
 
     // const variables for generating sql
     public static final String SQL_INSERT_INTO_SELECT = "insert into %1$s%2$s %3$s \n select %4$s;";
@@ -55,4 +55,7 @@ public class GenerationConsts {
     public static final String SUFFIX_FOR_CONSTS_NAME = "Consts.java";
     public static final String SUFFIX_FOR_FORM_NAME = "Form.java";
     public static final String UTF_8 = "UTF-8";
+
+    public static final String SIGN_DASH = "-";
+
 }

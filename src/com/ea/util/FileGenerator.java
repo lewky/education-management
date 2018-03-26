@@ -25,14 +25,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ea.util.constant.GenerationConsts;
+import com.ea.util.constant.GeneratorConsts;
 
 /**
  * @author Lewis.Liu
  */
-public final class FileGenerationHelper {
+public final class FileGenerator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileGenerationHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileGenerator.class);
 
     // keys in the db config properties
     private static final String KEY_GEN_FILE_SRC_PATH = "gen.file.src.path";
@@ -64,7 +64,7 @@ public final class FileGenerationHelper {
     }
 
     // privatize constructor
-    private FileGenerationHelper() {}
+    private FileGenerator() {}
 
     /**
      * Generate header comment in java file.
@@ -72,15 +72,15 @@ public final class FileGenerationHelper {
      */
     private static String genHeaderComment() {
         final Calendar calendar = Calendar.getInstance();
-        final SimpleDateFormat dateFomat = new SimpleDateFormat(GenerationConsts.DEFAULT_DATE_FORMAT);
+        final SimpleDateFormat dateFomat = new SimpleDateFormat(GeneratorConsts.DEFAULT_DATE_FORMAT);
         final String projectStartDate = StringUtils.isNotBlank(PROJECT_START_DATE) ? PROJECT_START_DATE
                 : calendar.get(Calendar.YEAR) + "";
         final String projectAuthor = StringUtils.isNotBlank(PROJECT_AUTHOR) ? PROJECT_AUTHOR
-                : GenerationConsts.DEFAULT_AUTHOR;
+                : GeneratorConsts.DEFAULT_AUTHOR;
         final String projectVersion = StringUtils.isNotBlank(PROJECT_VERSION) ? PROJECT_VERSION
-                : GenerationConsts.DEFAULT_VERSION;
+                : GeneratorConsts.DEFAULT_VERSION;
 
-        return String.format(GenerationConsts.CODE_HEADER_COMMENT, projectStartDate, calendar.get(Calendar.YEAR),
+        return String.format(GeneratorConsts.CODE_HEADER_COMMENT, projectStartDate, calendar.get(Calendar.YEAR),
                 projectAuthor, projectVersion, dateFomat.format(calendar.getTime()));
 
     }
@@ -95,14 +95,14 @@ public final class FileGenerationHelper {
         final StringBuilder builder = new StringBuilder();
         for (final String fieldName : fieldNames) {
             String newfieldName = "";
-            if (StringUtils.equals(fieldName, GenerationConsts.FIELD_SERIAL_VERSION_UID)) {
+            if (StringUtils.equals(fieldName, GeneratorConsts.FIELD_SERIAL_VERSION_UID)) {
                 continue;
             }
             newfieldName = StringUtils.upperCase(NameUtils.camel2underscore(fieldName), Locale.US);
             if (isConsts) {
-                builder.append(String.format(GenerationConsts.FIELD_IN_CONSTS, newfieldName, fieldName));
+                builder.append(String.format(GeneratorConsts.FIELD_IN_CONSTS, newfieldName, fieldName));
             } else {
-                builder.append(String.format(GenerationConsts.FIELD_IN_FORM, fieldName));
+                builder.append(String.format(GeneratorConsts.FIELD_IN_FORM, fieldName));
             }
         }
         return Objects.toString(builder);
@@ -116,8 +116,8 @@ public final class FileGenerationHelper {
     private static String genMethod(final List<String> fieldNames) {
         final StringBuilder builder = new StringBuilder();
         for (final String fieldName : fieldNames) {
-            builder.append(String.format(GenerationConsts.SETTER_METHOD, StringUtils.capitalize(fieldName), fieldName))
-                    .append(String.format(GenerationConsts.GETTER_METHOD, StringUtils.capitalize(fieldName),
+            builder.append(String.format(GeneratorConsts.SETTER_METHOD, StringUtils.capitalize(fieldName), fieldName))
+                    .append(String.format(GeneratorConsts.GETTER_METHOD, StringUtils.capitalize(fieldName),
                             fieldName));
         }
 
@@ -141,20 +141,20 @@ public final class FileGenerationHelper {
         for (final Field field : fields) {
             field.setAccessible(true);
             final String fieldName = field.getName();
-            if (StringUtils.equals(fieldName, GenerationConsts.FIELD_SERIAL_VERSION_UID)) {
+            if (StringUtils.equals(fieldName, GeneratorConsts.FIELD_SERIAL_VERSION_UID)) {
                 continue;
             }
             fieldNames.add(fieldName);
         }
         String fileBody = genFields(isConsts, fieldNames);
         if (isConsts) {
-            builder.append(String.format(GenerationConsts.CODE_PACKAGE_CONSTS, packageName))
-                    .append(String.format(GenerationConsts.CONSTS_FILE_TEMPLATE, simpleName, fileBody));
+            builder.append(String.format(GeneratorConsts.CODE_PACKAGE_CONSTS, packageName))
+                    .append(String.format(GeneratorConsts.CONSTS_FILE_TEMPLATE, simpleName, fileBody));
         } else {
-            builder.append(String.format(GenerationConsts.CODE_PACKAGE_FORM, packageName))
-                    .append(GenerationConsts.CODE_IMPORT_FORM);
+            builder.append(String.format(GeneratorConsts.CODE_PACKAGE_FORM, packageName))
+                    .append(GeneratorConsts.CODE_IMPORT_FORM);
             fileBody = Objects.toString(new StringBuilder(fileBody).append(genMethod(fieldNames)));
-            builder.append(String.format(GenerationConsts.FORM_FILE_TEMPLATE, simpleName, fileBody));
+            builder.append(String.format(GeneratorConsts.FORM_FILE_TEMPLATE, simpleName, fileBody));
         }
         return Objects.toString(builder);
     }
@@ -165,7 +165,7 @@ public final class FileGenerationHelper {
      * @return
      */
     private static <T> String getPackageName(final Class<T> clazz) {
-        final String packageName = StringUtils.substringBeforeLast(clazz.getName(), GenerationConsts.SEPARATOR_DOT);
+        final String packageName = StringUtils.substringBeforeLast(clazz.getName(), GeneratorConsts.SEPARATOR_DOT);
         return packageName;
     }
 
@@ -175,27 +175,27 @@ public final class FileGenerationHelper {
      * @param isConsts
      */
     public static <T> void genEntityFile(final Class<T> clazz, final boolean isConsts) {
-        String basePath = System.getProperty(GenerationConsts.KEY_USER_DIR);
+        String basePath = System.getProperty(GeneratorConsts.KEY_USER_DIR);
         basePath = StringUtils.isNotBlank(GEN_FILE_TARGET_PATH) ? GEN_FILE_TARGET_PATH : basePath;
         final StringBuilder pathBuilder = new StringBuilder();
-        String temp = StringUtils.replace(getPackageName(clazz), GenerationConsts.SEPARATOR_DOT,
-                GenerationConsts.SEPARATOR_PATH);
+        String temp = StringUtils.replace(getPackageName(clazz), GeneratorConsts.SEPARATOR_DOT,
+                GeneratorConsts.SEPARATOR_PATH);
         if (isConsts) {
-            temp = temp + GenerationConsts.SUFFIX_FOR_CONSTS_PATH;
+            temp = temp + GeneratorConsts.SUFFIX_FOR_CONSTS_PATH;
         } else {
-            temp = temp + GenerationConsts.SUFFIX_FOR_FORM_PATH;
+            temp = temp + GeneratorConsts.SUFFIX_FOR_FORM_PATH;
         }
-        pathBuilder.append(basePath).append(GenerationConsts.SEPARATOR_PATH).append(temp);
+        pathBuilder.append(basePath).append(GeneratorConsts.SEPARATOR_PATH).append(temp);
         final String targetPath = Objects.toString(pathBuilder);
         final StringBuilder nameBuilder = new StringBuilder();
         if (isConsts) {
-            nameBuilder.append(clazz.getSimpleName()).append(GenerationConsts.SUFFIX_FOR_CONSTS_NAME);
+            nameBuilder.append(clazz.getSimpleName()).append(GeneratorConsts.SUFFIX_FOR_CONSTS_NAME);
         } else {
-            nameBuilder.append(clazz.getSimpleName()).append(GenerationConsts.SUFFIX_FOR_FORM_NAME);
+            nameBuilder.append(clazz.getSimpleName()).append(GeneratorConsts.SUFFIX_FOR_FORM_NAME);
         }
         final String fileName = Objects.toString(nameBuilder);
         final String fullPath = Objects
-                .toString(new StringBuilder(targetPath).append(GenerationConsts.SEPARATOR_PATH).append(fileName));
+                .toString(new StringBuilder(targetPath).append(GeneratorConsts.SEPARATOR_PATH).append(fileName));
         final File file = new File(targetPath);
         if (!file.exists()) {
             file.mkdirs();
@@ -203,7 +203,7 @@ public final class FileGenerationHelper {
         OutputStream os = null;
         try {
             os = new FileOutputStream(new File(fullPath), false);
-            os.write(genJavaFile(clazz, isConsts).getBytes(GenerationConsts.UTF_8));
+            os.write(genJavaFile(clazz, isConsts).getBytes(GeneratorConsts.UTF_8));
         } catch (final IOException e) {
             if (isConsts) {
                 LOGGER.error("Failed to generate consts file for entity.", e);

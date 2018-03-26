@@ -15,15 +15,15 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.ea.entity.BaseEntity;
-import com.ea.util.constant.GenerationConsts;
+import com.ea.util.constant.GeneratorConsts;
 
 /**
  * @author Lewis.Liu
  */
-public class SQLGenerationHelper {
+public final class SQLGenerator {
 
     // privatize constructor
-    private SQLGenerationHelper() {}
+    private SQLGenerator() {}
 
     /**
      * Generate insert sql for entity.
@@ -38,15 +38,15 @@ public class SQLGenerationHelper {
             fields = ArrayUtils.addAll(fields, commonFields);
         }
         final String className = clazz.getSimpleName();
-        final String fieldsStr = String.format(Locale.US, GenerationConsts.SQL_FIELD_PARENTHESES,
+        final String fieldsStr = String.format(Locale.US, GeneratorConsts.SQL_FIELD_PARENTHESES,
                 fields2String(false, fields));
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < fields.length; i++) {
-            builder.append(GenerationConsts.SQL_PREPARED_FIELD_COMMA);
+            builder.append(GeneratorConsts.SQL_PREPARED_FIELD_COMMA);
         }
         final String sqlBody = StringUtils.substringBeforeLast(Objects.toString(builder),
-                GenerationConsts.SEPARATOR_COMMA);
-        return String.format(Locale.US, GenerationConsts.SQL_INSERT_INTO_SELECT, GenerationConsts.PREFIX_FOR_TABLE_NAME,
+                GeneratorConsts.SEPARATOR_COMMA);
+        return String.format(Locale.US, GeneratorConsts.SQL_INSERT_INTO_SELECT, GeneratorConsts.PREFIX_FOR_TABLE_NAME,
                 NameUtils.camel2underscore(className), fieldsStr, sqlBody);
     }
 
@@ -58,18 +58,18 @@ public class SQLGenerationHelper {
         for (final Field field : fields) {
             field.setAccessible(true);
             final String fieldName = field.getName();
-            if (StringUtils.equals(fieldName, GenerationConsts.FIELD_SERIAL_VERSION_UID)) {
+            if (StringUtils.equals(fieldName, GeneratorConsts.FIELD_SERIAL_VERSION_UID)) {
                 continue;
             }
             if (hasAlias) {
                 final String alias = NameUtils.camel2underscore(fieldName);
-                builder.append(String.format(Locale.US, GenerationConsts.SQL_FIELD_AS_ALIAS, fieldName, alias));
+                builder.append(String.format(Locale.US, GeneratorConsts.SQL_FIELD_AS_ALIAS, fieldName, alias));
             } else {
-                builder.append(String.format(Locale.US, GenerationConsts.SQL_FIELD_COMMA, fieldName));
+                builder.append(String.format(Locale.US, GeneratorConsts.SQL_FIELD_COMMA, fieldName));
             }
         }
 
-        return StringUtils.substringBeforeLast(Objects.toString(builder), GenerationConsts.SEPARATOR_COMMA);
+        return StringUtils.substringBeforeLast(Objects.toString(builder), GeneratorConsts.SEPARATOR_COMMA);
     }
 
 }
