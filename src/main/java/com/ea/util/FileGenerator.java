@@ -44,7 +44,7 @@ public final class FileGenerator {
     /**
      * generation config file
      */
-    private static final String GENERATION_CONFIG_NAME = "GenerationConfig";
+    private static final String GENERATION_CONFIG_NAME = "GeneratorConfig";
 
     // keys in generation config file
     private static final String GEN_FILE_SRC_PATH;

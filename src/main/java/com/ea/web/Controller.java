@@ -3,22 +3,18 @@
 // CURRENT VERSION EA.1.0.0
 // ============================================================================
 // CHANGE LOG
-// EA.1.0.0 : 2018-3-15, Lewis.Liu created
+// EA.1.0.0 : 2018年3月25日, Lewis.Liu created
 // ============================================================================
-package com.ea.dao;
+package com.ea.web;
 
-import java.util.List;
-
-import com.ea.entity.User;
+import javax.servlet.http.HttpServlet;
 
 /**
  * @author Lewis.Liu
+ *
  */
-public interface UserDao {
+public class Controller extends HttpServlet {
 
-    List<User> listAllUsers();
+    private static final long serialVersionUID = -4000136003111771574L;
 
-    User login(String loginId, String password);
-
-    void logout(User loginUser);
 }
