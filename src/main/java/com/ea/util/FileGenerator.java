@@ -73,12 +73,10 @@ public final class FileGenerator {
     private static String genHeaderComment() {
         final Calendar calendar = Calendar.getInstance();
         final SimpleDateFormat dateFomat = new SimpleDateFormat(GeneratorConsts.DEFAULT_DATE_FORMAT);
-        final String projectStartDate = StringUtils.isNotBlank(PROJECT_START_DATE) ? PROJECT_START_DATE
-                : calendar.get(Calendar.YEAR) + "";
-        final String projectAuthor = StringUtils.isNotBlank(PROJECT_AUTHOR) ? PROJECT_AUTHOR
-                : GeneratorConsts.DEFAULT_AUTHOR;
-        final String projectVersion = StringUtils.isNotBlank(PROJECT_VERSION) ? PROJECT_VERSION
-                : GeneratorConsts.DEFAULT_VERSION;
+        final String projectStartDate = StringUtils.defaultIfBlank(PROJECT_START_DATE,
+                calendar.get(Calendar.YEAR) + "");
+        final String projectAuthor = StringUtils.defaultIfBlank(PROJECT_AUTHOR, GeneratorConsts.DEFAULT_AUTHOR);
+        final String projectVersion = StringUtils.defaultIfBlank(PROJECT_VERSION, GeneratorConsts.DEFAULT_VERSION);
 
         return String.format(GeneratorConsts.CODE_HEADER_COMMENT, projectStartDate, calendar.get(Calendar.YEAR),
                 projectAuthor, projectVersion, dateFomat.format(calendar.getTime()));
@@ -117,8 +115,7 @@ public final class FileGenerator {
         final StringBuilder builder = new StringBuilder();
         for (final String fieldName : fieldNames) {
             builder.append(String.format(GeneratorConsts.SETTER_METHOD, StringUtils.capitalize(fieldName), fieldName))
-                    .append(String.format(GeneratorConsts.GETTER_METHOD, StringUtils.capitalize(fieldName),
-                            fieldName));
+                    .append(String.format(GeneratorConsts.GETTER_METHOD, StringUtils.capitalize(fieldName), fieldName));
         }
 
         return Objects.toString(builder);
@@ -176,7 +173,7 @@ public final class FileGenerator {
      */
     public static <T> void genEntityFile(final Class<T> clazz, final boolean isConsts) {
         String basePath = System.getProperty(GeneratorConsts.KEY_USER_DIR);
-        basePath = StringUtils.isNotBlank(GEN_FILE_TARGET_PATH) ? GEN_FILE_TARGET_PATH : basePath;
+        basePath = StringUtils.defaultIfBlank(GEN_FILE_TARGET_PATH, basePath);
         final StringBuilder pathBuilder = new StringBuilder();
         String temp = StringUtils.replace(getPackageName(clazz), GeneratorConsts.SEPARATOR_DOT,
                 GeneratorConsts.SEPARATOR_PATH);
