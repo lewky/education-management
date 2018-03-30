@@ -15,6 +15,12 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 /**
+ * Operations on name string that is null safe.
+ * <ul>
+ *  <li><b>camel2underscore</b></li>
+ *  <li><b>underscore2camel</b></li>
+ *  <li><b>abbreviateName</b></li>
+ * </ul>
  * @author Lewis.Liu
  */
 public final class NameUtils {
@@ -28,11 +34,10 @@ public final class NameUtils {
 
     /**
      * Change the camelCase to underscoreCase.
-     * <P>
+     * <pre>
      * DemoOne -> demo_one
-     * <p>
-     * null -> ""
-     *
+     * null    -> ""
+     * </pre>
      * @param str
      * @return
      */
@@ -57,10 +62,10 @@ public final class NameUtils {
 
     /**
      * Change the underscoreCase to camelCase.
-     * <P>
+     * <pre>
      * demo_one -> DemoOne
-     * <p>
-     * null -> ""
+     * null     -> ""
+     * </pre>
      *
      * @param str
      * @return
@@ -85,10 +90,10 @@ public final class NameUtils {
 
     /**
      * Abbreviate the input string for db table name.
-     * <p>
-     * null -> ""
-     * <p>
+     * <pre>
      * ea_class_student -> ecs
+     * null             -> ""
+     * </pre>
      *
      * @param str
      * @return
