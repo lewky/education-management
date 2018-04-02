@@ -35,7 +35,7 @@ public final class EntityUtils {
      * @param clazz
      */
     public static <T> void genEntityConsts(final Class<T> clazz) {
-        FileGenerator.genEntityFile(clazz, true);
+        FileGenerator.genFile4Entity(clazz, true);
     }
 
     /**
@@ -43,7 +43,7 @@ public final class EntityUtils {
      * @param clazz
      */
     public static <T> void genEntityForm(final Class<T> clazz) {
-        FileGenerator.genEntityFile(clazz, false);
+        FileGenerator.genFile4Entity(clazz, false);
     }
 
     /**

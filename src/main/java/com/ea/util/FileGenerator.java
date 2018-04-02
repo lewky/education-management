@@ -128,7 +128,7 @@ public final class FileGenerator {
      * @param isConsts
      * @return
      */
-    private static <T> String genJavaFile(final Class<T> clazz, final boolean isConsts) {
+    public static <T> String genJavaFile(final Class<T> clazz, final boolean isConsts) {
         final StringBuilder builder = new StringBuilder();
         builder.append(genHeaderComment());
         final String packageName = getPackageName(clazz);
@@ -171,7 +171,7 @@ public final class FileGenerator {
      * @param clazz
      * @param isConsts
      */
-    public static <T> void genEntityFile(final Class<T> clazz, final boolean isConsts) {
+    public static <T> void genFile4Entity(final Class<T> clazz, final boolean isConsts) {
         String basePath = System.getProperty(GeneratorConsts.KEY_USER_DIR);
         basePath = StringUtils.defaultIfBlank(GEN_FILE_TARGET_PATH, basePath);
         final StringBuilder pathBuilder = new StringBuilder();
