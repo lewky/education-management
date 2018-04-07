@@ -14,6 +14,10 @@ package com.ea.web.constant;
 public class PathConsts {
 
     public static final String SEPARATOR_PATH = "/";
+    public static final String PATH_PREFIX = "/WEB-INF/jsp";
+    public static final String COMMON_PATH = "/common";
+    public static final String FORM_PATH = "/form";
+    public static final String VIEW_PATH = "/view";
     public static final String INDEX_PAGE = "/index.html";
     public static final String ERROR_PAGE = "/error.html";
     public static final String LOGIN_SERVLET = "/login";
