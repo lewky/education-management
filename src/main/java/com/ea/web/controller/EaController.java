@@ -15,15 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
-
+import com.ea.web.constant.AttrConsts;
 import com.ea.web.constant.PathConsts;
 
 /**
  * @author Lewis.Liu
  *
  */
-@WebServlet(value = "/", name = "EaControlloer")
+@WebServlet(value = "/ea", name = "EaControlloer")
 public class EaController extends HttpServlet {
 
     private static final long serialVersionUID = -4000136003111771574L;
@@ -35,15 +34,12 @@ public class EaController extends HttpServlet {
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
             throws ServletException, IOException {
 
-        final String servletPath = req.getServletPath();
-        // TODO:  update path {login/main/index?}
-        if (StringUtils.equals(servletPath, PathConsts.SEPARATOR_PATH)) {
-            if (req.getSession().getAttribute("loginUser") == null) {
-                req.getRequestDispatcher(PathConsts.LOGIN_PAGE);
-            }
-            req.getRequestDispatcher(PathConsts.MAIN_PAGE);
+        // 进行登录验证，如果用户未登录则转发到登陆页面
+        if (req.getSession().getAttribute(AttrConsts.LOGIN_USER) == null) {
+            req.getRequestDispatcher(PathConsts.PATH_PREFIX + PathConsts.LOGIN_PAGE).forward(req, resp);
+            return;
         }
-        req.getRequestDispatcher(servletPath);
+        req.getRequestDispatcher(PathConsts.PATH_PREFIX + PathConsts.MAIN_PAGE).forward(req, resp);
     }
 
     /* (non-Javadoc)

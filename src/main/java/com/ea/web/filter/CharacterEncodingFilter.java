@@ -22,7 +22,7 @@ import javax.servlet.annotation.WebFilter;
  * @author Lewis.Liu
  *
  */
-@WebFilter(urlPatterns = {"/"}, servletNames = "encoding")
+@WebFilter(urlPatterns = {"/*"}, servletNames = "encoding")
 public class CharacterEncodingFilter implements Filter {
 
     private String encoding;
