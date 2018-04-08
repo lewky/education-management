@@ -1,8 +1,26 @@
+<!-- 指定jsp文件本身的编码，若不指定正确的编码，该jsp的内容被其他页面include之后可能会发生中文乱码 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- 指定页面作者 -->
 <meta name="author" content="lewis">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- charset是HTML5中的新属性，替换了：<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+<!-- 也可以选择使用 http-equiv 属性来规定字符集，但是使用charset可以减少代码量 -->
+<!-- 这里的编码是服务端发送给客户端使用的内容编码，如果浏览器的默认编码与该编码不同则会乱码 -->
 <meta charset="utf-8">
+
+<!-- 让IE使用最新的渲染模式 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- 针对移动设备,网站显示宽度等于设备屏幕显示宽度,内容缩放比例为1:1 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 让部分国产浏览器默认采用高速模式渲染页面 -->
+<meta name="renderer" content="webkit">
+
+<!-- 将所有相对路径的基础路径设为项目根路径，将所有超链的打开方式设为另起空白页 -->
 <base href="${pageContext.request.contextPath}/" target="_blank">
+
+<!-- 为项目的所有页面设定页面图标 -->
 <link rel="shortcut icon" href="resources/images/ea.ico" />
 
 <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
