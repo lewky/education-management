@@ -1,5 +1,3 @@
-<!-- 指定jsp文件本身的编码，若不指定正确的编码，该jsp的内容被其他页面include之后可能会发生中文乱码 -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- 指定页面作者 -->
 <meta name="author" content="lewis">
 
@@ -20,7 +18,7 @@
 <!-- 将所有相对路径的基础路径设为项目根路径，将所有超链的打开方式设为另起空白页 -->
 <base href="${pageContext.request.contextPath}/" target="_blank">
 
-<!-- 为项目的所有页面设定页面图标 -->
+<!-- 在页面地址栏左边显示图标 -->
 <link rel="shortcut icon" href="resources/images/ea.ico" />
 
 <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->

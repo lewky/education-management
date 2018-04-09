@@ -7,17 +7,34 @@
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 	<error-page>
-	   <error-code>400</error-code>
-	   <location>/error.html</location>
+		<error-code>400</error-code>
+		<location>/error.html</location>
 	</error-page>
 	<error-page>
-	   <error-code>404</error-code>
-	   <location>/error.html</location>
+		<error-code>404</error-code>
+		<location>/error.html</location>
 	</error-page>
 	<error-page>
-	   <error-code>500</error-code>
-	   <location>/error.html</location>
+		<error-code>500</error-code>
+		<location>/error.html</location>
 	</error-page>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/error.html</location>
+	</error-page>
+
+	<jsp-config>
+		<jsp-property-group>
+			<description>set common config for html file</description>
+			<url-pattern>*.html</url-pattern>
+			<page-encoding>utf-8</page-encoding>
+		</jsp-property-group>
+		<jsp-property-group>
+			<description>set common config for jsp file</description>
+			<url-pattern>*.jsp</url-pattern>
+			<page-encoding>utf-8</page-encoding>
+		</jsp-property-group>
+	</jsp-config>
 </web-app> 
