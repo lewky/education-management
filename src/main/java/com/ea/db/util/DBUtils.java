@@ -157,7 +157,7 @@ public final class DBUtils {
      * @return
      * @throws SQLException
      */
-    public static <T> List<T> executeQuery(final Class<T> clazz, final String sql, final Object... params) {
+    public static <T> List<T> executeQuery(final String sql, final Class<T> clazz, final Object... params) {
         final Connection conn = getConnection();
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
@@ -232,12 +232,12 @@ public final class DBUtils {
 
     /**
      * Execute insert prepared sql.
-     *
      * @param sql
      * @param t
+     * @param obj
      * @return
      */
-    public static <T> boolean executeInsert(final String sql, final T t) {
+    public static <T> boolean executeInsert(final String sql, final T t, final Object obj) {
         final Connection conn = getConnection();
         PreparedStatement pstmt = null;
         int num = 0;
@@ -249,7 +249,7 @@ public final class DBUtils {
                 for (final Field field : fields) {
                     field.setAccessible(true);
                     try {
-                        pstmt.setObject(index, field.get(t));
+                        pstmt.setObject(index, field.get(obj));
                     } catch (IllegalArgumentException | IllegalAccessException e) {
                         LOGGER.error("Failed to execute the insert sql.", e);
                     }

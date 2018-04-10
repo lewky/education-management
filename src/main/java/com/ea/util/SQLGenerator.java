@@ -14,7 +14,7 @@ import java.util.Objects;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.ea.entity.BaseEntity;
+import com.ea.entity.base.BaseEntity;
 import com.ea.util.constant.GeneratorConsts;
 
 /**
