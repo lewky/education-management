@@ -8,12 +8,13 @@
 package com.ea.service;
 
 import com.ea.entity.User;
+import com.ea.service.base.BaseService;
 
 /**
  * @author Lewis.Liu
  *
  */
-public interface UserService {
+public interface UserService extends BaseService {
 
     User login(String loginId, String password);
 
