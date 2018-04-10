@@ -1,4 +1,3 @@
-<!-- 指定页面作者 -->
 <meta name="author" content="lewis">
 
 <!-- charset是HTML5中的新属性，替换了：<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->

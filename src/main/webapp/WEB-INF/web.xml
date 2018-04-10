@@ -30,11 +30,13 @@
 			<description>set common config for html file</description>
 			<url-pattern>*.html</url-pattern>
 			<page-encoding>utf-8</page-encoding>
+			<include-prelude>/WEB-INF/jsp/common/head.jsp</include-prelude>
 		</jsp-property-group>
 		<jsp-property-group>
 			<description>set common config for jsp file</description>
 			<url-pattern>*.jsp</url-pattern>
 			<page-encoding>utf-8</page-encoding>
+			<include-prelude>/WEB-INF/jsp/common/head.jsp</include-prelude>
 		</jsp-property-group>
 	</jsp-config>
 </web-app> 
