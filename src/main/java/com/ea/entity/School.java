@@ -7,6 +7,8 @@
 // ============================================================================
 package com.ea.entity;
 
+import com.ea.entity.base.BaseEntity;
+
 /**
  * @author Lewis.Liu
  */

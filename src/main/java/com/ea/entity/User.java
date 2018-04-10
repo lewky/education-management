@@ -9,6 +9,8 @@ package com.ea.entity;
 
 import java.util.Date;
 
+import com.ea.entity.base.BaseEntity;
+
 /**
  * @author Lewis.Liu
  */

@@ -5,7 +5,7 @@
 // CHANGE LOG
 // EA.1.0.0 : 2018-2-1, Lewis.Liu created
 // ============================================================================
-package com.ea.entity;
+package com.ea.entity.base;
 
 import java.io.Serializable;
 import java.util.Date;
