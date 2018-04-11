@@ -1,0 +1,31 @@
+.login_bg {
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 1500px 650px;
+    background-color: white;
+}
+
+.login_main {
+    width: 890px;
+    margin: 0px auto 0px auto;
+}
+
+.login_left {
+    width: 420px;
+    height: 340px;
+    float: left;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-size: 50%;
+}
+
+.login_right {
+    width: 425px;
+    height: 400px;
+    float: left;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin-top: 30px;
+    padding-left: 30px;
+}
