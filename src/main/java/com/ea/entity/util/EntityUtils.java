@@ -35,6 +35,7 @@ public final class EntityUtils {
      * @param clazz
      */
     public static <T> void genEntityConsts(final Class<T> clazz) {
+        LOGGER.info("Start to generate constants for {}...", clazz.getName());
         FileGenerator.genFile4Entity(clazz, true);
     }
 
@@ -43,6 +44,7 @@ public final class EntityUtils {
      * @param clazz
      */
     public static <T> void genEntityForm(final Class<T> clazz) {
+        LOGGER.info("Start to generate entity form for {}...", clazz.getName());
         FileGenerator.genFile4Entity(clazz, false);
     }
 
@@ -51,6 +53,7 @@ public final class EntityUtils {
      * @param clazz
      */
     public static <T> void genFiles4Entity(final Class<T> clazz) {
+        LOGGER.info("Start to generate constant file and entity form for {}...", clazz.getName());
         genEntityConsts(clazz);
         genEntityForm(clazz);
     }
