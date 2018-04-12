@@ -7,17 +7,17 @@
 // ============================================================================
 package com.ea.service.impl;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.ea.entity.User;
 import com.ea.service.UserService;
+import com.ea.service.base.AbstractBaseService;
 
 /**
  * @author Lewis.Liu
  *
  */
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractBaseService implements UserService {
+
+    private UserServiceImpl() {}
 
     /* (non-Javadoc)
      * @see com.ea.service.UserService#login(java.lang.String, java.lang.String)
@@ -37,49 +37,20 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    /* (non-Javadoc)
-     * @see com.ea.service.base.BaseService#queryById(java.lang.String, java.lang.Class, java.io.Serializable)
+    /**
+     * Inner class to hold singleton instance of outer class.
+     * @author Lewis.Liu
+     *
      */
-    @Override
-    public <T> Object queryById(final String sql, final Class<T> clazz, final Serializable id) {
-        // TODO Auto-generated method stub
-        return null;
+    private static class SingletonHolder {
+        private static UserService instance = new UserServiceImpl();
     }
 
-    /* (non-Javadoc)
-     * @see com.ea.service.base.BaseService#insert(java.lang.String, java.lang.Object)
+    /**
+     * Return singleton instance.
+     * @return
      */
-    @Override
-    public void insert(final String sql, final Object obj) {
-        // TODO Auto-generated method stub
-
+    public static UserService getInstance() {
+        return SingletonHolder.instance;
     }
-
-    /* (non-Javadoc)
-     * @see com.ea.service.base.BaseService#delete(java.lang.String, java.lang.Object)
-     */
-    @Override
-    public void delete(final String sql, final Object obj) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /* (non-Javadoc)
-     * @see com.ea.service.base.BaseService#update(java.lang.String, java.lang.Object)
-     */
-    @Override
-    public void update(final String sql, final Object obj) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /* (non-Javadoc)
-     * @see com.ea.service.base.BaseService#getResult(java.lang.String, java.lang.Object[])
-     */
-    @Override
-    public <T> List<T> getResult(final String sql, final Object... params) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }
