@@ -1,42 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  
-          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-
-	<error-page>
-		<error-code>400</error-code>
-		<location>/error.html</location>
-	</error-page>
-	<error-page>
-		<error-code>404</error-code>
-		<location>/error.html</location>
-	</error-page>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/error.html</location>
-	</error-page>
-	<error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/error.html</location>
-	</error-page>
-
-	<jsp-config>
-		<jsp-property-group>
-			<description>set common config for html file</description>
-			<url-pattern>*.html</url-pattern>
-			<page-encoding>utf-8</page-encoding>
-			<include-prelude>/WEB-INF/jsp/common/head.jsp</include-prelude>
-		</jsp-property-group>
-		<jsp-property-group>
-			<description>set common config for jsp file</description>
-			<url-pattern>*.jsp</url-pattern>
-			<page-encoding>utf-8</page-encoding>
-			<include-prelude>/WEB-INF/jsp/common/head.jsp</include-prelude>
-		</jsp-property-group>
-	</jsp-config>
-</web-app> 
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <error-page>
+    <error-code>400</error-code>
+    <location>/error.html</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error.html</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error.html</location>
+  </error-page>
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/error.html</location>
+  </error-page>
+  <jsp-config>
+    <jsp-property-group>
+      <description>set common config for html file</description>
+      <url-pattern>*.html</url-pattern>
+      <page-encoding>utf-8</page-encoding>
+      <include-prelude>/WEB-INF/jsp/common/head.jsp</include-prelude>
+    </jsp-property-group>
+    <jsp-property-group>
+      <description>set common config for jsp file</description>
+      <url-pattern>*.jsp</url-pattern>
+      <page-encoding>utf-8</page-encoding>
+      <include-prelude>/WEB-INF/jsp/common/head.jsp</include-prelude>
+    </jsp-property-group>
+  </jsp-config>
+</web-app>
