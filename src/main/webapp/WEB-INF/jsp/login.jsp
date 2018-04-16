@@ -28,19 +28,12 @@
             <div class="login_right">
                 <img src="resources/images/login_right2.png" width="60%"
                     style="margin-left: 110px; margin-top: 20px; margin-bottom: 20px"><br> <label
-                    style="margin-left: 55px">用户名：</label><input type="text" name="username"
-                    style="width: 45%; margin-top: 10px; color: gray"
-                    value="${sessionScope.username == null?'请输入学号或工号':sessionScope.username }"
-                    onfocus="if(this.value=='请输入学号或工号'){this.value='';this.style.color='black';}else{this.style.color='black'}"
-                    onblur="if(this.value==''){this.style.color='gray';this.value='请输入学号或工号';}else{this.style.color='gray'}">
-                <br> <label style="margin-left: 55px">密&ensp;&ensp;码：</label><input type="text" name="password"
-                    style="width: 45%; margin-top: 10px; color: gray" value="请输入密码"
-                    onfocus="if(this.value=='请输入密码'){this.value='';this.style.color='black';this.type='password';}"
-                    onblur="if(this.value==''){this.style.color='gray';this.value='请输入密码';this.type='text';}"> <br>
-                <label style="margin-left: 55px">验证码：</label><input type="text" name="code"
-                    style="width: 20%; margin-top: 10px; vertical-align: bottom; color: gray" value="请输入验证码"
-                    onfocus="if(this.value=='请输入验证码'){this.value='';this.style.color='black';}"
-                    onblur="if(this.value==''){this.style.color='gray';this.value='请输入验证码';}"> <img
+                    style="margin-left: 55px">用户名：</label> <input type="text" name="username"
+                    style="width: 45%; margin-top: 10px;" placeholder="请输入学号或工号"> <br> <label
+                    style="margin-left: 55px">密&ensp;&ensp;码：</label><input type="text" name="password"
+                    style="width: 45%; margin-top: 10px;" placeholder="请输入密码"> <br> <label
+                    style="margin-left: 55px">验证码：</label><input type="text" name="code"
+                    style="width: 20%; margin-top: 10px; vertical-align: bottom;" placeholder="请输入验证码"> <img
                     src="${pageContext.request.contextPath }/VerificationCodeServlet" id="img" title="看不清楚，换一张"
                     style="padding-bottom: 0px; vertical-align: bottom" onclick="javascript:change()">&nbsp;&nbsp;<a
                     href="javascript:change()">换一张</a> <br> <label style="margin-left: 55px">用户类型:</label>&nbsp;&nbsp;

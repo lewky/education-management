@@ -18,7 +18,7 @@
 <base href="${pageContext.request.contextPath}/" target="_blank">
 
 <!-- 在页面地址栏左边显示图标 -->
-<link rel="shortcut icon" href="resources/images/ea.ico" />
+<link rel="shortcut icon" href="resources/images/em.ico" />
 
 <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
 <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
