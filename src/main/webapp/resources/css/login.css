@@ -1,33 +1,35 @@
 @charset "utf-8";
 
-.login_bg {
+.login-bg {
+    overflow: hidden;
+    height: 100%;
+    min-height: 600px;
+    background-image: url(../images/login_bg.jpg);
     background-repeat: no-repeat;
+    background-size: cover;
     background-attachment: scroll;
-    background-size: 1500px 650px;
-    background-color: white;
 }
 
-.login_main {
+.login-main {
     width: 890px;
-    margin: 0px auto 0px auto;
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-.login_left {
-    width: 420px;
-    height: 340px;
-    float: left;
-    background-attachment: scroll;
-    background-repeat: no-repeat;
-    background-size: 50%;
+.login-topic {
+    width: 890px;
+    margin-top: 20px;
 }
 
-.login_right {
+.login-middle {
+    float: right;
+    overflow: hidden;
     width: 425px;
-    height: 400px;
-    float: left;
-    background-attachment: scroll;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    margin-top: 30px;
+    height: 280px;
+    margin-top: 20px;
     padding-left: 30px;
+    border:white 3px solid;
+    background-color: #0080ff;
+    border-radius: 10px 10px;
 }
