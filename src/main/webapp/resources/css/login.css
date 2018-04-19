@@ -11,15 +11,13 @@
 }
 
 .login-main {
-    width: 890px;
+    min-width: 950px;
     margin-top: 20px;
-    margin-right: auto;
-    margin-left: auto;
 }
 
 .login-topic {
-    width: 890px;
     margin-top: 20px;
+    text-align: center;
 }
 
 .login-middle {
